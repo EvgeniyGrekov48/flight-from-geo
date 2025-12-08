@@ -1,5 +1,5 @@
 .main-map--container {
-  height: 90vh;
+  height: calc(100vh - 16px);
 }
 
 .map-wrapper { position: relative; }
