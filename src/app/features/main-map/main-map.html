@@ -1,5 +1,11 @@
-<div class="main-map--container"
-    leaflet
-    [leafletOptions]="options"
-    [leafletLayersControl]="layersControlConfig">
+<div class="map-wrapper">
+  <div class="main-map--container" leaflet [leafletOptions]="options" [leafletLayersControl]="layersControlConfig"
+    (leafletMapReady)="onMapReady($event)">
+  </div>
+
+  <div class="custom-controls">
+    <button tuiButton size="s" (click)="locateUser()" class="geolocation-btn">
+      МОЯ
+    </button>
+  </div>
 </div>
