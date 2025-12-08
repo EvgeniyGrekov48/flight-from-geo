@@ -10,7 +10,7 @@ import { TuiButton, tuiIconsProvider, TuiIcon } from '@taiga-ui/core';
   imports: [CommonModule,
     LeafletDirective,
     LeafletLayersControlDirective,
-    TuiButton, TuiIcon],
+    TuiButton],
   templateUrl: './main-map.html',
   styleUrl: './main-map.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -43,6 +43,7 @@ export class MainMap {
   onMapReady(map: L.Map) {
     this.mapInstance = map;
     this.mapInstance.zoomControl.setPosition('bottomright')
+    this.mapInstance.attributionControl.setPrefix("Leaflet")
   }
 
   locateUser() {
