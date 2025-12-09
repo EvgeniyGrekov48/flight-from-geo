@@ -1,0 +1,11 @@
+    <div class="list">
+      @for (obj of objects(); track obj.id) {
+        <app-object-card
+          [object]="obj"
+          [isSelected]="selectedObjectId() === obj.id"
+          (clicked)="objectClicked.emit(obj.id)"
+        />
+      } @empty {
+        <div class="empty">Объектов не найдено</div>
+      }
+    </div>

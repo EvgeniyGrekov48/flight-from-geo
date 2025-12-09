@@ -5,6 +5,7 @@ import { MainMap } from './features/main-map/main-map';
   selector: 'app-root',
   imports: [MainMap],
   templateUrl: './app.html',
+  styleUrl: './app.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {
