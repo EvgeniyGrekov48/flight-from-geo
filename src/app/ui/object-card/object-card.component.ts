@@ -1,5 +1,5 @@
-import { Component, input, output } from '@angular/core';
-import { MapObject } from '../../core/types/types';
+import { Component } from '@angular/core';
+
 
 @Component({
   selector: 'app-object-card',
@@ -8,7 +8,5 @@ import { MapObject } from '../../core/types/types';
   styleUrl: './object-card.component.css',
 })
 export class ObjectCardComponent {
-  object = input.required<MapObject>();
-  isSelected = input(false);
-  clicked = output<void>();
+
 }

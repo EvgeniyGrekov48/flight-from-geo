@@ -25,10 +25,10 @@ export const OPTIONS_MAP = {
 
 export const LAYERS_CONTROL_CONFIG = {
     baseLayers: {
-        'Рельеф': ESRI_TERRAIN_LAYER,
         "Улицы": STREET_LAYER,
         'Спутник': SATELITE_LAYER,
         "Топо мир": OPENTOPO_LAYER,
+        'Рельеф': ESRI_TERRAIN_LAYER,
     },
     overlays: {}
 } as LeafletControlLayersConfig

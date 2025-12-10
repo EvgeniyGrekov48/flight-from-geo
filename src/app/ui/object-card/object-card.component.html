@@ -1,5 +1,0 @@
-    <div class="card" [class.selected]="isSelected()" (click)="clicked.emit()">
-      <h3>{{ object().name }}</h3>
-      <p>{{ object().description }}</p>
-      <div class="coords">{{ object().lat.toFixed(4) }}, {{ object().lng.toFixed(4) }}</div>
-    </div>

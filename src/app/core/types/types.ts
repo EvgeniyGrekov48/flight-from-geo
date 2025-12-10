@@ -1,15 +1,23 @@
+
+// API          | sufix Request / Response
+// Inner types  | sufix Model
+// From Library | sufix Lib
+
 export enum EnumMapObject {
     PARAGLIDING = 'paragliding',
     THERMAL = 'thermal',
     USER = 'user',
 }
 
-export interface MapObject {
-    id: string;
-    name: string;
-    description: string;
-    lat: number;
-    lng: number;
+export interface LatLngLib {
+    lat: number
+    lng: number
+}
+
+export interface MapObjectModel {
     type: EnumMapObject;
-    createdAt: string;
+    id: number;
+    tittle: string;
+    description: string;
+    coords: LatLngLib
 }
