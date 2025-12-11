@@ -1,17 +1,12 @@
 import { Component, inject } from '@angular/core';
-import { UIStore } from '../../core/stores/ui.store';
-import { MapObjectService } from '../../core/services/map-object.service';
+import { MapObjectListComponent } from "../../ui/map-object-list/map-object-list.component";
 
 @Component({
   selector: 'app-sidebar',
-  imports: [],
+  imports: [MapObjectListComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
 })
 export class SidebarComponent {
-  private uiStore = inject(UIStore);
-  private mapObjectService = inject(MapObjectService);
-  
-  // Данные объектов
-  readonly objectsCount = () => this.mapObjectService.objects().length;
+
 }

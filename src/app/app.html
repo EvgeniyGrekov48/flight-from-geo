@@ -1,4 +1,11 @@
-<div class="main-layout" >
-    <app-sidebar class="sidebar" [class.sidebar__open]="isSidebarOpen()"></app-sidebar>
-    <app-main-map class="main-map" [class.main-map__full]="isSidebarOpen()"></app-main-map>
+<div class="main-layout" [style.--sidebar__transition]="uiStore.OPEN_CLOSE__TRANSITION + 'ms'"
+    [style.--sidebar__open__width]="uiStore.WIDTH + '%'">
+
+        <app-main-map class="main-map" [class.main-map__compressed]="isSidebarOpen()">
+    </app-main-map>
+    
+    <app-sidebar class="sidebar" [class.sidebar__open]="isSidebarOpen()">
+    </app-sidebar>
+
+
 </div>

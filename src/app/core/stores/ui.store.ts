@@ -1,15 +1,14 @@
 import { Injectable, signal } from '@angular/core';
 
-
 @Injectable({ providedIn: 'root' })
 export class UIStore {
-    // Состояние сайдбара
+    public readonly OPEN_CLOSE__TRANSITION = 1000
+    public readonly WIDTH = 30
+
     private readonly _isSidebarOpen = signal<boolean>(false);
 
-    // Публичный интерфейс только для чтения
     public isSidebarOpen = this._isSidebarOpen.asReadonly();
 
-    // Действия
     public toggleSidebar(): void {
         this._isSidebarOpen.update(current => !current);
     }

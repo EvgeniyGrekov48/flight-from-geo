@@ -1,17 +1,15 @@
 <div class="map-wrapper">
-
   <div class="main-map--container" leaflet [leafletOptions]="options" [leafletLayersControl]="layersControlConfig"
     (leafletMapReady)="onMapReady($event)">
   </div>
 
-  <!-- Кнопка переключения сайдбара -->
-  <button tuiButton size="s" (click)="toggleSidebar()" class="sidebar-toggle-btn"
-    [class.sidebar-closed]="!isSidebarOpen()">
-    {{ isSidebarOpen() ? '◀' : '▶' }}
-  </button>
+  <div class="custom-controls">
+    <button tuiButton size="s" (click)="toggleSidebar()" class="sidebar-toggle-btn">
+      {{ isSidebarOpen() ? '▶' : '◀' }}
+    </button>
 
-  <button tuiButton class="custom-controls geolocation-btn" size="s" (click)="getLocateUser()">
-    МОЯ
-  </button>
-
+    <button tuiButton class="geolocation-btn" size="s" (click)="getLocateUser()">
+      МОЯ
+    </button>
+  </div>
 </div>

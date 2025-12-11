@@ -12,7 +12,7 @@ import { UIStore } from './core/stores/ui.store';
 })
 export class App {
   protected readonly title = signal('flight-from-geo');
-  private uiStore = inject(UIStore);
+  public uiStore = inject(UIStore);
   
   // Состояние сайдбара
   readonly isSidebarOpen = this.uiStore.isSidebarOpen;

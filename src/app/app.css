@@ -4,19 +4,20 @@
 }
 
 .sidebar {
+  overflow: hidden;
   width: 0;
-  transition: width 1s ease;
+  transition: width var(--sidebar__transition) ease;
 }
 
 .main-map {
   width: 100%;
-  transition: width 1s ease;
+  transition: width var(--sidebar__transition) ease;
 }
 
 .sidebar__open {
-  width: 30% !important;
+  width: var(--sidebar__open__width);
 }
 
-.main-map__full {
-  width: 70% !important;
+.main-map__compressed {
+  width: calc(100% - var(--sidebar__open__width));
 }
