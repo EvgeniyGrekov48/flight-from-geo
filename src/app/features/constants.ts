@@ -9,6 +9,14 @@ const SATELITE_LAYER = tileLayer('https://server.arcgisonline.com/ArcGIS/rest/se
     attribution: 'Tiles © <a href="https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer">Esri</a>'
 });
 
+const OPENTOPO_LAYER = tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+    attribution: 'Карта: © <a href="https://opentopomap.org">OpenTopoMap</a> | Данные: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+});
+
+const ESRI_TERRAIN_LAYER = tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Источник: Esri'
+});
+
 export const OPTIONS_MAP = {
     layers: [STREET_LAYER],
     zoom: 7,
@@ -17,9 +25,11 @@ export const OPTIONS_MAP = {
 
 export const LAYERS_CONTROL_CONFIG = {
     baseLayers: {
-        "Топо мир": STREET_LAYER,
-        'Спутник': SATELITE_LAYER
-    } as {[name: string]: Layer},
+        "Улицы": STREET_LAYER,
+        'Спутник': SATELITE_LAYER,
+        "Топо мир": OPENTOPO_LAYER,
+        'Рельеф': ESRI_TERRAIN_LAYER,
+    },
     overlays: {}
 } as LeafletControlLayersConfig
 
