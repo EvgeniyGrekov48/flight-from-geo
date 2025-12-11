@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
   templateUrl: './map-object-card.component.html',
   styleUrl: './map-object-card.component.css',
 })
-export class mapObjectCardComponent {
+export class MapObjectCardComponent {
 
 }
