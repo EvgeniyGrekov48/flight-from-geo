@@ -4,6 +4,7 @@ import { LeafletDirective, LeafletLayersControlDirective } from '@bluehalo/ngx-l
 import { TuiButton } from '@taiga-ui/core';
 import { LAYERS_CONTROL_CONFIG, OPTIONS_MAP } from '../constants';
 import { NavigatorService } from '../../core/services/navigator.service';
+import { UIStore } from '../../core/stores/ui.store';
 
 @Component({
   selector: 'app-main-map',
@@ -18,14 +19,29 @@ import { NavigatorService } from '../../core/services/navigator.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainMap {
+  private uiStore = inject(UIStore);
   private readonly navigator = inject(NavigatorService)
   private mapInstance?: L.Map;
-  
+
+  //state
+  protected isSidebarOpen = this.uiStore.isSidebarOpen;
+  //constants
   protected readonly options = OPTIONS_MAP
   protected readonly layersControlConfig = LAYERS_CONTROL_CONFIG
 
   constructor() {
     this.initEffectViewLocateUser()
+
+  effect(() => {
+    const isOpen = this.isSidebarOpen();
+    if (this.mapInstance) {
+      setTimeout(() => {
+        this.invalidateSize()
+      }, 1100)
+
+    }
+  });
+
   }
 
   //------INIT-------
@@ -38,8 +54,13 @@ export class MainMap {
     });
   }
 
+  public invalidateSize(): void {
+    this.mapInstance?.invalidateSize();
+  }
+
   public onMapReady(map: L.Map) {
     this.mapInstance = map;
+    this.mapInstance?.invalidateSize()
     this.mapInstance.zoomControl.setPosition('bottomright')
     this.mapInstance.attributionControl.setPrefix("Leaflet")
   }
@@ -47,6 +68,10 @@ export class MainMap {
   //-------USER_ACTION-----
   getLocateUser() {
     this.navigator.getCurrentPosition()
+  }
+
+  toggleSidebar() {
+    this.uiStore.toggleSidebar();
   }
 
 }
