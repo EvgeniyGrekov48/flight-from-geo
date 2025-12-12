@@ -1,23 +1,24 @@
     .card {
       padding: 1rem;
+      margin-top: 0.5rem;
       margin-bottom: 0.5rem;
       cursor: pointer;
-      transition: all 0.2s;
-      border: 1px solid #e0e0e0;
+      transition: all 0.4s;
+      border: 2px solid hsl(240, 20%, 70%);
       border-radius: 8px;
     }
     
     .card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transform: translateY(-4px);
+      box-shadow: 0 4px 12px hsl(240, 20%, 30%);
     }
     
     .card.selected {
-      border-color: #007bff; /* tui-primary */
-      background: #e6f2ff; /* tui-primary-hover */
+      border-color: hsl(240, 20%, 50%);
+      background: hsl(240, 20%, 92%);
     }
     
     .description {
-      margin: 0 0 1rem 0;
-      color: #666; /* tui-text-02 */
+      margin: 1rem 0 0rem 0;
+      color: hsl(240, 20%, 50%);
     }

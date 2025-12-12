@@ -4,7 +4,7 @@ import { TuiSurface, TuiTitle } from '@taiga-ui/core';
 
 @Component({
   selector: 'app-map-object-card',
-  imports: [TuiSurface, TuiTitle],
+  imports: [TuiSurface, TuiTitle ],
   templateUrl: './map-object-card.component.html',
   styleUrl: './map-object-card.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
