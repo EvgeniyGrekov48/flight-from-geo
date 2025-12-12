@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MapObjectService } from '../../core/services/map-object.service';
 import { UIStore } from '../../core/stores/ui.store';
 import { TuiScrollbar } from "@taiga-ui/core";
-import { MapObjectCardComponent } from "../map-object-card/map-object-card.component";
+import { MapObjectCardComponent } from "../../ui/map-object-card/map-object-card.component";
 
 @Component({
   selector: 'app-map-object-list',

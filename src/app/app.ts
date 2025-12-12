@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { MainMap } from './features/main-map/main-map';
 import { UIStore } from './core/stores/ui.store';
-import { MapObjectListComponent } from "./ui/map-object-list/map-object-list.component";
+import { MapObjectListComponent } from "./features/map-object-list/map-object-list.component";
 
 @Component({
   selector: 'app-root',
