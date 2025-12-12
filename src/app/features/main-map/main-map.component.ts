@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { LeafletDirective, LeafletLayersControlDirective } from '@bluehalo/ngx-leaflet';
 import { TuiButton } from '@taiga-ui/core';
-import { LAYERS_CONTROL_CONFIG, OPTIONS_MAP } from '../constants';
+import { LAYERS_CONTROL_CONFIG, OPTIONS_MAP } from './main-map.const';
 import { NavigatorService } from '../../core/services/navigator.service';
 import { UIStore } from '../../core/stores/ui.store';
 
