@@ -1,20 +1,28 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { MainMapComponent } from './features/main-map/main-map.component';
-import { UIStore } from './core/stores/ui.store';
-import { MapObjectListComponent } from "./features/map-object-list/map-object-list.component";
+import {
+  ApplicationConfig,
+  ChangeDetectionStrategy,
+  Component,
+  provideBrowserGlobalErrorListeners,
+  provideZonelessChangeDetection,
+  signal
+} from '@angular/core';
+import { MainLayoutComponent } from "./ui/main-layout/main-layout.component";
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideBrowserGlobalErrorListeners(),
+    provideZonelessChangeDetection(),
+  ]
+};
 
 @Component({
   selector: 'app-root',
-  imports: [MainMapComponent, MapObjectListComponent],
-  templateUrl: './app.html',
-  styleUrl: './app.css',
+  imports: [MainLayoutComponent],
+  template: `
+    <app-main-layout/>
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {
   protected readonly title = signal('flight-from-geo');
-  public uiStore = inject(UIStore);
-  
-  // Состояние сайдбара
-  readonly isSidebarOpen = this.uiStore.isSidebarOpen;
-  
 }

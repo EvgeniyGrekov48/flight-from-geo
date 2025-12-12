@@ -19,46 +19,38 @@ import { UIStore } from '../../core/stores/ui.store';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainMapComponent {
-  private uiStore = inject(UIStore);
+  private readonly uiStore = inject(UIStore);
   private readonly navigator = inject(NavigatorService)
   private mapInstance?: L.Map;
 
   //state
-  protected isSidebarOpen = this.uiStore.isSidebarOpen;
+  protected readonly isSidebarOpen = this.uiStore.isSidebarOpen;
+ 
   //constants
   protected readonly options = OPTIONS_MAP
   protected readonly layersControlConfig = LAYERS_CONTROL_CONFIG
 
   constructor() {
     this.initEffectViewLocateUser()
-
-  effect(() => {
-    const isOpen = this.isSidebarOpen();
-    if (this.mapInstance) {
-      setTimeout(() => {
-        this.invalidateSize()
-      }, this.uiStore.SIDEBAR__TRANSITION)
-
-    }
-  });
-
+    this.initEffectInvalidateSize()
   }
 
   //------INIT-------
-  private initEffectViewLocateUser() {
+  private initEffectViewLocateUser(): void {
     effect(() => {
-      const coords = this.navigator.coords();
-      if (coords && this.mapInstance) {
-        this.mapInstance.flyTo([coords.latitude, coords.longitude], this.mapInstance.getZoom());
-      }
+      const _coords = this.navigator.getCoords();
+      this.mapInstance?.flyTo([_coords.latitude, _coords.longitude], this.mapInstance.getZoom());
     });
   }
 
-  public invalidateSize(): void {
-    this.mapInstance?.invalidateSize();
+  private initEffectInvalidateSize(): void {
+    effect(() => {
+      const _obs = this.isSidebarOpen();
+      setTimeout(() => this.mapInstance?.invalidateSize(), this.uiStore.SIDEBAR__TRANSITION + 1)
+    });
   }
 
-  public onMapReady(map: L.Map) {
+  protected onMapReady(map: L.Map) {
     this.mapInstance = map;
     this.mapInstance?.invalidateSize()
     this.mapInstance.zoomControl.setPosition('bottomright')
@@ -66,11 +58,11 @@ export class MainMapComponent {
   }
 
   //-------USER_ACTION-----
-  getLocateUser() {
-    this.navigator.getCurrentPosition()
+  protected flyToLocateUser() {
+    this.navigator.updateCurrentPosition()
   }
 
-  toggleSidebar() {
+  protected toggleSidebar() {
     this.uiStore.toggleSidebar();
   }
 
