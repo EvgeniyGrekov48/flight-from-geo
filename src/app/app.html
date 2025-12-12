@@ -1,11 +1,8 @@
-<div class="main-layout" [style.--sidebar__transition]="uiStore.OPEN_CLOSE__TRANSITION + 'ms'"
-    [style.--sidebar__open__width]="uiStore.WIDTH + '%'">
+<div class="main-layout" [style.--sidebar__transition]="uiStore.SIDEBAR__TRANSITION + 'ms'"
+    [style.--sidebar__open__width]="uiStore.SIDEBAR__WIDTH + '%'">
 
-        <app-main-map class="main-map" [class.main-map__compressed]="isSidebarOpen()">
-    </app-main-map>
+    <app-main-map class="main-map" [class.main-map__compressed]="isSidebarOpen()"></app-main-map>
     
-    <app-sidebar class="sidebar" [class.sidebar__open]="isSidebarOpen()">
-    </app-sidebar>
-
-
+    <app-map-object-list class="sidebar" [class.sidebar__open]="isSidebarOpen()">
+    </app-map-object-list>
 </div>

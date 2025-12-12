@@ -37,7 +37,7 @@ export class MainMap {
     if (this.mapInstance) {
       setTimeout(() => {
         this.invalidateSize()
-      }, this.uiStore.OPEN_CLOSE__TRANSITION)
+      }, this.uiStore.SIDEBAR__TRANSITION)
 
     }
   });

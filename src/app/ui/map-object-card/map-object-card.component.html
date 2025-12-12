@@ -1,0 +1,7 @@
+<div tuiSurface class="card" [class.selected]="isSelected()" (click)="clicked.emit()">
+    <div class="card-header">
+        <h3 tuiTitle size="s">{{ object().tittle }}</h3>
+    </div>
+
+    <p class="description">{{ object().description }}</p>
+</div>

@@ -1,0 +1,6 @@
+<tui-scrollbar class="list">
+  @for (obj of mapObjectService.objects(); track obj.id) {
+  <app-map-object-card [object]="obj" [isSelected]="uiStore.selectedObjectId() === obj.id"
+    (clicked)="uiStore.selectObject(obj.id)" (editClicked)="editObject(obj.id)" />
+  }
+</tui-scrollbar>

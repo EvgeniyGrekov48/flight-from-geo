@@ -1,9 +1,8 @@
-import { Component, inject } from '@angular/core';
-import { MapObjectListComponent } from "../../ui/map-object-list/map-object-list.component";
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [MapObjectListComponent],
+  imports: [],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
 })
