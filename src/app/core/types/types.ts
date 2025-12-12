@@ -1,7 +1,7 @@
 
 // API          | sufix Request / Response
 // Inner types  | sufix Model
-// From Library | sufix Lib
+// From Library | sufix FromLib
 
 export enum EnumMapObject {
     PARAGLIDING = 'paragliding',
@@ -9,7 +9,7 @@ export enum EnumMapObject {
     USER = 'user',
 }
 
-export interface LatLngLib {
+export interface LatLngFromLib {
     lat: number
     lng: number
 }
@@ -19,5 +19,5 @@ export interface MapObjectModel {
     id: number;
     tittle: string;
     description: string;
-    coords: LatLngLib
+    coords: LatLngFromLib;
 }

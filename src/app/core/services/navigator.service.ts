@@ -2,17 +2,18 @@ import { Injectable, signal } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class NavigatorService {
-  public coords = signal<GeolocationCoordinates | null>(null);
-  
-  getCurrentPosition(): void {
+  private readonly _coords = signal<GeolocationCoordinates>({latitude: 0, longitude: 0} as GeolocationCoordinates);
+  public readonly getCoords = this._coords.asReadonly()
+
+  public updateCurrentPosition(): void {
     if (!navigator.geolocation) {
       console.error('Геолокация не поддерживается');
       return;
     }
-    
+
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        this.coords.set(position.coords);
+        this._coords.set(position.coords);
       },
       (error) => {
         console.error('Ошибка геолокации:', error.message);

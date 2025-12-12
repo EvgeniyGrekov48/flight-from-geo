@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { LeafletDirective, LeafletLayersControlDirective } from '@bluehalo/ngx-leaflet';
 import { TuiButton } from '@taiga-ui/core';
-import { LAYERS_CONTROL_CONFIG, OPTIONS_MAP } from '../constants';
+import { LAYERS_CONTROL_CONFIG, OPTIONS_MAP } from './main-map.const';
 import { NavigatorService } from '../../core/services/navigator.service';
 import { UIStore } from '../../core/stores/ui.store';
 
@@ -14,51 +14,43 @@ import { UIStore } from '../../core/stores/ui.store';
     LeafletLayersControlDirective,
     TuiButton,
   ],
-  templateUrl: './main-map.html',
-  styleUrl: './main-map.css',
+  templateUrl: './main-map.component.html',
+  styleUrl: './main-map.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MainMap {
-  private uiStore = inject(UIStore);
+export class MainMapComponent {
+  private readonly uiStore = inject(UIStore);
   private readonly navigator = inject(NavigatorService)
   private mapInstance?: L.Map;
 
   //state
-  protected isSidebarOpen = this.uiStore.isSidebarOpen;
+  protected readonly isSidebarOpen = this.uiStore.isSidebarOpen;
+ 
   //constants
   protected readonly options = OPTIONS_MAP
   protected readonly layersControlConfig = LAYERS_CONTROL_CONFIG
 
   constructor() {
     this.initEffectViewLocateUser()
-
-  effect(() => {
-    const isOpen = this.isSidebarOpen();
-    if (this.mapInstance) {
-      setTimeout(() => {
-        this.invalidateSize()
-      }, 1100)
-
-    }
-  });
-
+    this.initEffectInvalidateSize()
   }
 
   //------INIT-------
-  private initEffectViewLocateUser() {
+  private initEffectViewLocateUser(): void {
     effect(() => {
-      const coords = this.navigator.coords();
-      if (coords && this.mapInstance) {
-        this.mapInstance.flyTo([coords.latitude, coords.longitude], this.mapInstance.getZoom());
-      }
+      const _coords = this.navigator.getCoords();
+      this.mapInstance?.flyTo([_coords.latitude, _coords.longitude], this.mapInstance.getZoom());
     });
   }
 
-  public invalidateSize(): void {
-    this.mapInstance?.invalidateSize();
+  private initEffectInvalidateSize(): void {
+    effect(() => {
+      const _obs = this.isSidebarOpen();
+      setTimeout(() => this.mapInstance?.invalidateSize(), this.uiStore.SIDEBAR__TRANSITION + 1)
+    });
   }
 
-  public onMapReady(map: L.Map) {
+  protected onMapReady(map: L.Map) {
     this.mapInstance = map;
     this.mapInstance?.invalidateSize()
     this.mapInstance.zoomControl.setPosition('bottomright')
@@ -66,11 +58,11 @@ export class MainMap {
   }
 
   //-------USER_ACTION-----
-  getLocateUser() {
-    this.navigator.getCurrentPosition()
+  protected flyToLocateUser() {
+    this.navigator.updateCurrentPosition()
   }
 
-  toggleSidebar() {
+  protected toggleSidebar() {
     this.uiStore.toggleSidebar();
   }
 

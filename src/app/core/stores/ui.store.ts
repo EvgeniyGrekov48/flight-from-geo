@@ -1,15 +1,16 @@
 import { Injectable, signal } from '@angular/core';
 
-
 @Injectable({ providedIn: 'root' })
 export class UIStore {
-    // Состояние сайдбара
+    public readonly SIDEBAR__TRANSITION = 1000
+
     private readonly _isSidebarOpen = signal<boolean>(false);
+    private _selectedObjectId = signal<number | null>(null);
 
-    // Публичный интерфейс только для чтения
-    public isSidebarOpen = this._isSidebarOpen.asReadonly();
+    public readonly isSidebarOpen = this._isSidebarOpen.asReadonly();
+    public readonly getSelectedObjectId = this._selectedObjectId.asReadonly();
 
-    // Действия
+
     public toggleSidebar(): void {
         this._isSidebarOpen.update(current => !current);
     }
@@ -20,5 +21,9 @@ export class UIStore {
 
     public closeSidebar(): void {
         this._isSidebarOpen.set(false);
+    }
+
+    public selectObject(id: number | null): void {
+        this._selectedObjectId.set(id);
     }
 }

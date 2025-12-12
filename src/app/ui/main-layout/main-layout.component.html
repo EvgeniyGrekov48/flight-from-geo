@@ -1,0 +1,8 @@
+<div class="main-layout" [style.--sidebar__transition]="SIDEBAR__TRANSITION + 'ms'"
+    [style.--sidebar__open__width]="SIDEBAR__WIDTH + '%'">
+
+    <app-main-map class="main-map" [class.main-map__compressed]="isSidebarOpen()"></app-main-map>
+    
+    <app-map-object-list class="sidebar" [class.sidebar__open]="isSidebarOpen()">
+    </app-map-object-list>
+</div>

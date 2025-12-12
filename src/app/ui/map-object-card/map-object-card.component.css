@@ -1,0 +1,24 @@
+    .card {
+      padding: 1rem;
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+      transition: all 0.4s;
+      border: 2px solid hsl(240, 20%, 70%);
+      border-radius: 8px;
+    }
+    
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 12px hsl(240, 20%, 30%);
+    }
+    
+    .card.selected {
+      border-color: hsl(240, 20%, 50%);
+      background: hsl(240, 20%, 92%);
+    }
+    
+    .description {
+      margin: 1rem 0 0rem 0;
+      color: hsl(240, 20%, 50%);
+    }
