@@ -14,11 +14,11 @@ import { UIStore } from '../../core/stores/ui.store';
     LeafletLayersControlDirective,
     TuiButton,
   ],
-  templateUrl: './main-map.html',
-  styleUrl: './main-map.css',
+  templateUrl: './main-map.component.html',
+  styleUrl: './main-map.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MainMap {
+export class MainMapComponent {
   private uiStore = inject(UIStore);
   private readonly navigator = inject(NavigatorService)
   private mapInstance?: L.Map;
