@@ -5,6 +5,9 @@ import { TuiButton } from '@taiga-ui/core';
 import { LAYERS_CONTROL_CONFIG, OPTIONS_MAP } from './main-map.const';
 import { NavigatorService } from '../../core/services/navigator.service';
 import { UIStore } from '../../core/stores/ui.store';
+import L from 'leaflet';
+import { MapObjectService } from '../../core/services/map-object.service';
+import { MapObjectModel } from '../../core/types/types';
 
 @Component({
   selector: 'app-main-map',
@@ -19,13 +22,15 @@ import { UIStore } from '../../core/stores/ui.store';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainMapComponent {
+  private readonly mapObjectService = inject(MapObjectService);
   private readonly uiStore = inject(UIStore);
   private readonly navigator = inject(NavigatorService)
   private mapInstance?: L.Map;
+  private readonly markersLayer = L.layerGroup();
 
   //state
   protected readonly isSidebarOpen = this.uiStore.isSidebarOpen;
- 
+
   //constants
   protected readonly options = OPTIONS_MAP
   protected readonly layersControlConfig = LAYERS_CONTROL_CONFIG
@@ -33,6 +38,7 @@ export class MainMapComponent {
   constructor() {
     this.initEffectViewLocateUser()
     this.initEffectInvalidateSize()
+    this.initUpdateMarkers()
   }
 
   //------INIT-------
@@ -50,11 +56,31 @@ export class MainMapComponent {
     });
   }
 
+  private initUpdateMarkers(): void {
+    effect(() => {
+      this.updateMarkers(this.mapObjectService.getObjects());
+    });
+  }
+
   protected onMapReady(map: L.Map) {
     this.mapInstance = map;
     this.mapInstance?.invalidateSize()
     this.mapInstance.zoomControl.setPosition('bottomright')
     this.mapInstance.attributionControl.setPrefix("Leaflet")
+
+    this.markersLayer.addTo(map);
+  }
+
+  private updateMarkers(objects: MapObjectModel[]) {
+    this.markersLayer.clearLayers();
+
+    objects.forEach(obj => {
+      const marker = L.marker([obj.coords.lat, obj.coords.lng])
+        .bindPopup(`<b>${obj.tittle}</b><br>${obj.description}`)
+        .on('click', () => this.uiStore.selectObject(obj.id));
+
+      marker.addTo(this.markersLayer);
+    });
   }
 
   //-------USER_ACTION-----

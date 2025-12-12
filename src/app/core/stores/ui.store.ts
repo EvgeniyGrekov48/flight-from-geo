@@ -24,6 +24,7 @@ export class UIStore {
     }
 
     public selectObject(id: number | null): void {
-        this._selectedObjectId.set(id);
+        const isClicedOnSelected = this._selectedObjectId() === id
+        this._selectedObjectId.set(isClicedOnSelected ? null : id);
     }
 }
