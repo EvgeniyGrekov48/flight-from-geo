@@ -17,7 +17,7 @@ export interface LatLngFromLib {
 export interface MapObjectModel {
     type: EnumMapObject;
     id: number;
-    tittle: string;
+    title: string;
     description: string;
     coords: LatLngFromLib;
 }

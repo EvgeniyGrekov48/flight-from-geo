@@ -1,75 +1,82 @@
-import { Injectable, signal } from '@angular/core';
-import { EnumMapObject, MapObjectModel } from '../types/types';
+import { DestroyRef, inject, Injectable, Signal, signal, WritableSignal } from '@angular/core';
+import { MapObjectModel } from '../types/types';
+import { APIService } from './api.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable({ providedIn: 'root' })
 export class MapObjectService {
-  private readonly _objects = signal<MapObjectModel[]>([
-    {
-      id: 1,
-      tittle: 'Гора Пикет',
-      description: 'Отличное место для парапланеризма',
-      coords: {
-        lat: 44.101,
-        lng: 39.023,
-      },
-      type: EnumMapObject.PARAGLIDING,
-    },
-    {
-      id: 2,
-      tittle: 'Красная Поляна',
-      description: 'Мощные термические потоки',
-      coords: {
-        lat: 43.679,
-        lng: 40.204,
-      },
-      type: EnumMapObject.THERMAL,
-    },
-    {
-      id: 3,
-      tittle: 'Аэродром Южный',
-      description: 'Можно полетать с мотором',
-      coords: {
-        lat: 57.9975,
-        lng: 38.836,
-      },
-      type: EnumMapObject.USER,
-    },
-    {
-      id: 4,
-      tittle: 'Аэродром Староселье',
-      description: 'Заброшенный аэродром',
-      coords: {
-        lat: 58.1,
-        lng: 38.92,
-      },
-      type: EnumMapObject.USER,
-    },
-    {
-      id: 5,
-      tittle: 'Забава',
-      description: 'Лучшее место в области для термических полетов на склоне',
-      coords: {
-        lat: 58.034,
-        lng: 38.96,
-      },
-      type: EnumMapObject.PARAGLIDING,
-    },
-  ]);
+  private readonly API = inject(APIService)
+  private readonly destroyRef = inject(DestroyRef);
 
-  public readonly getObjects = this._objects.asReadonly();
+  private readonly _objects: WritableSignal<MapObjectModel[]> = signal([]);
+  public readonly getObjects: Signal<MapObjectModel[]> = this._objects.asReadonly();
 
-  public addObject(object: Omit<MapObjectModel, "id">): void {
-    const newObject: MapObjectModel = { ...object, id: Date.now() };
-    this._objects.update(current => [...current, newObject]);
+  public loadMapObjects(): void {
+    this.API.getMapObjects()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (value) => this._objects.set(value),
+        error: (error) => console.error(error),
+      })
   }
 
-  public updateObject(updatedObject: MapObjectModel): void {
-    this._objects.update(current =>
-      current.map(obj => obj.id === updatedObject.id ? updatedObject : obj)
-    );
-  }
+  // public doDeleteTask(id: number): void {
+  //   const task = this.getTasks().find(v => v.id === id)
+  //   this.protocol.deleteTask(id)
+  //     .pipe(takeUntilDestroyed(this.destroyRef))
+  //     .subscribe({
+  //       next: () => {
+  //         this.toast.show(`Задача "${task?.title}" удалена`)
+  //         this.loadTasks()
+  //       },
+  //       error: () => {
+  //         this.toast.show(`Ошибка удаления задачи "${task?.title}"`)
+  //       }
+  //     })
+  // }
 
-  public deleteObject(id: number): void {
-    this._objects.update(current => current.filter(obj => obj.id !== id));
-  }
+  // public doAddNewTask(task: Partial<Task>): void {
+  //   const taskOverall = { ...task, id: this.getIdNextAfterMax(), status: TaskStatus.SCHEDULED } as Task
+  //   this.protocol.addTask(taskOverall)
+  //     .pipe(takeUntilDestroyed(this.destroyRef))
+  //     .subscribe({
+  //       next: () => {
+  //         this.toast.show(`Задача "${taskOverall.title}" добавлена`)
+  //         this.loadTasks()
+  //       },
+  //       error: () => {
+  //         this.toast.show(`Ошибка добавления задачи "${taskOverall.title}"`)
+  //       }
+  //     })
+  // }
+
+  // public doChangeTaskTitle(id: number, title: string): void {
+  //   this.protocol.updateTask(id, { title: title })
+  //     .pipe(takeUntilDestroyed(this.destroyRef))
+  //     .subscribe({
+  //       next: () => {
+  //         this.isEdited.set(null)
+  //         this.toast.show(`Изменен заголовок задачи "${title}"`)
+  //         this.loadTasks()
+  //       },
+  //       error: () => {
+  //         this.toast.show(`Ошибка изменения заголовка задачи "${title}"`)
+  //       }
+  //     })
+  // }
+
+  // public addObject(object: Omit<MapObjectModel, "id">): void {
+  //   const newObject: MapObjectModel = { ...object, id: Date.now() };
+  //   this._objects.update(current => [...current, newObject]);
+  // }
+
+  // public updateObject(updatedObject: MapObjectModel): void {
+  //   this._objects.update(current =>
+  //     current.map(obj => obj.id === updatedObject.id ? updatedObject : obj)
+  //   );
+  // }
+
+  // public deleteObject(id: number): void {
+  //   this._objects.update(current => current.filter(obj => obj.id !== id));
+  // }
 }

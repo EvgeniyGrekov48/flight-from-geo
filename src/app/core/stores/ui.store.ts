@@ -27,4 +27,5 @@ export class UIStore {
         const isClicedOnSelected = this._selectedObjectId() === id
         this._selectedObjectId.set(isClicedOnSelected ? null : id);
     }
+    
 }
