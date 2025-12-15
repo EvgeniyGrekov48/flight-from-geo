@@ -26,64 +26,34 @@ export class MapObjectService {
     },
     {
       id: 3,
-      tittle: 'Гора Пикет',
-      description: 'Отличное место для парапланеризма',
+      tittle: 'Аэродром Южный',
+      description: 'Можно полетать с мотором',
       coords: {
-        lat: 44.101,
-        lng: 39.023,
+        lat: 57.9975,
+        lng: 38.836,
       },
-      type: EnumMapObject.PARAGLIDING,
+      type: EnumMapObject.USER,
     },
     {
       id: 4,
-      tittle: 'Красная Поляна',
-      description: 'Мощные термические потоки',
+      tittle: 'Аэродром Староселье',
+      description: 'Заброшенный аэродром',
       coords: {
-        lat: 43.679,
-        lng: 40.204,
+        lat: 58.1,
+        lng: 38.92,
       },
-      type: EnumMapObject.THERMAL,
+      type: EnumMapObject.USER,
     },
     {
       id: 5,
-      tittle: 'Гора Пикет',
-      description: 'Отличное место для парапланеризма',
+      tittle: 'Забава',
+      description: 'Лучшее место в области для термических полетов на склоне',
       coords: {
-        lat: 44.101,
-        lng: 39.023,
+        lat: 58.034,
+        lng: 38.96,
       },
       type: EnumMapObject.PARAGLIDING,
     },
-    {
-      id: 6,
-      tittle: 'Красная Поляна',
-      description: 'Мощные термические потоки',
-      coords: {
-        lat: 43.679,
-        lng: 40.204,
-      },
-      type: EnumMapObject.THERMAL,
-    },
-    {
-      id: 7,
-      tittle: 'Гора Пикет',
-      description: 'Отличное место для парапланеризма',
-      coords: {
-        lat: 44.101,
-        lng: 39.023,
-      },
-      type: EnumMapObject.PARAGLIDING,
-    },
-    {
-      id: 8,
-      tittle: 'Красная Поляна',
-      description: 'Мощные термические потоки',
-      coords: {
-        lat: 43.679,
-        lng: 40.204,
-      },
-      type: EnumMapObject.THERMAL,
-    }
   ]);
 
   public readonly getObjects = this._objects.asReadonly();

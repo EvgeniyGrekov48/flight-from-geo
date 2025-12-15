@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
-import { LeafletDirective, LeafletLayersControlDirective } from '@bluehalo/ngx-leaflet';
+import { LeafletDirective, LeafletLayerDirective, LeafletLayersControlDirective, LeafletLayersDirective } from '@bluehalo/ngx-leaflet';
 import { TuiButton } from '@taiga-ui/core';
 import { LAYERS_CONTROL_CONFIG, OPTIONS_MAP } from './main-map.const';
 import { NavigatorService } from '../../core/services/navigator.service';
 import { UIStore } from '../../core/stores/ui.store';
+import L from 'leaflet';
+import { MarkersLayerService } from './markers-layer.service';
 
 @Component({
   selector: 'app-main-map',
@@ -12,8 +14,11 @@ import { UIStore } from '../../core/stores/ui.store';
   imports: [CommonModule,
     LeafletDirective,
     LeafletLayersControlDirective,
+    LeafletLayersDirective,
+    LeafletLayerDirective,
     TuiButton,
   ],
+  providers: [MarkersLayerService],
   templateUrl: './main-map.component.html',
   styleUrl: './main-map.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,12 +26,15 @@ import { UIStore } from '../../core/stores/ui.store';
 export class MainMapComponent {
   private readonly uiStore = inject(UIStore);
   private readonly navigator = inject(NavigatorService)
+  private readonly markersLayerService = inject(MarkersLayerService);
+  
   private mapInstance?: L.Map;
 
-  //state
+  protected readonly markersLayer = this.markersLayerService.markerLayerSignal;
+  protected readonly selectLayer = this.markersLayerService.selectedLayerSignal;
+
   protected readonly isSidebarOpen = this.uiStore.isSidebarOpen;
- 
-  //constants
+
   protected readonly options = OPTIONS_MAP
   protected readonly layersControlConfig = LAYERS_CONTROL_CONFIG
 
