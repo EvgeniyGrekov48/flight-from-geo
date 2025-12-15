@@ -1,0 +1,111 @@
+import { Injectable, inject, computed } from '@angular/core';
+import L, { TooltipOptions } from 'leaflet';
+import { EnumMapObject } from '../../core/types/types';
+import { MapObjectService } from '../../core/services/map-object.service';
+import { UIStore } from '../../core/stores/ui.store';
+
+const MARKER_RADIUS = 8;
+const MARKER_BORDER = 2;
+const SELECTED_MULTIPLIER = 1.5;
+
+const SIZE = (radius: number, border: number) => radius + border;
+
+const MARKER_COLORS = {
+    [EnumMapObject.PARAGLIDING]: '#007bff',
+    [EnumMapObject.THERMAL]: '#dc3545',
+    [EnumMapObject.USER]: '#28a745'
+};
+
+const createIcon = (type: EnumMapObject, isSelected: boolean): L.DivIcon => {
+    const radius = MARKER_RADIUS * (isSelected ? SELECTED_MULTIPLIER : 1);
+    const border = MARKER_BORDER * (isSelected ? SELECTED_MULTIPLIER : 1);
+    const color = MARKER_COLORS[type];
+    const size = SIZE(radius, border);
+    const html = `<div style="
+            background: ${color};
+            width: ${radius * 2}px;
+            height: ${radius * 2}px;
+            border-radius: 50%;
+            border: ${border}px solid white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        "></div>`
+
+    return L.divIcon({
+        html,
+        className: '',
+        iconSize: [size * 2, size * 2],
+        iconAnchor: [size, size]
+    });
+};
+
+const NORMAL_ICONS = {
+    [EnumMapObject.PARAGLIDING]: createIcon(EnumMapObject.PARAGLIDING, false),
+    [EnumMapObject.THERMAL]: createIcon(EnumMapObject.THERMAL, false),
+    [EnumMapObject.USER]: createIcon(EnumMapObject.USER, false)
+};
+
+const SELECTED_ICONS = {
+    [EnumMapObject.PARAGLIDING]: createIcon(EnumMapObject.PARAGLIDING, true),
+    [EnumMapObject.THERMAL]: createIcon(EnumMapObject.THERMAL, true),
+    [EnumMapObject.USER]: createIcon(EnumMapObject.USER, true)
+};
+
+const NORMAL_TOOLTIP_OPTION = {
+    direction: 'top',
+    offset: L.point(0, -SIZE(MARKER_RADIUS, MARKER_BORDER))
+} as TooltipOptions
+
+const SELECTED_TOOLTIP_OPTION = {
+    direction: 'top',
+    offset: L.point(0, -SIZE(MARKER_RADIUS * SELECTED_MULTIPLIER, MARKER_BORDER * SELECTED_MULTIPLIER))
+} as TooltipOptions
+
+@Injectable()
+export class MarkersLayerService {
+    private readonly mapObjectService = inject(MapObjectService);
+    private readonly uiStore = inject(UIStore);
+
+    private readonly markerLayer = L.layerGroup();
+    private readonly selectLayer = L.layerGroup();
+
+    public readonly markerLayerSignal = computed(() => {
+        this.updateMarkerLayer();
+        return this.markerLayer;
+    });
+
+    public readonly selectedLayerSignal = computed(() => {
+        this.updateSelectLayer();
+        return this.selectLayer;
+    });
+
+    private updateMarkerLayer(): void {
+        this.markerLayer.clearLayers();
+        const objects = this.mapObjectService.getObjects();
+        objects.forEach(obj => {
+            const marker = L.marker([obj.coords.lat, obj.coords.lng], {
+                icon: NORMAL_ICONS[obj.type]
+            });
+            marker
+                .bindTooltip(`<b>${obj.tittle}</b><br>${obj.description}`, NORMAL_TOOLTIP_OPTION)
+                .on('click', () => this.uiStore.selectObject(obj.id))
+                .addTo(this.markerLayer);
+        });
+    }
+
+    private updateSelectLayer(): void {
+        this.selectLayer.clearLayers();
+        const selectedId = this.uiStore.getSelectedObjectId();
+        const selectedObj = this.mapObjectService.getObjects()
+            .find(obj => obj.id === selectedId);
+        if (selectedObj) {
+            const marker = L.marker([selectedObj.coords.lat, selectedObj.coords.lng], {
+                icon: SELECTED_ICONS[selectedObj.type]
+            });
+            marker
+                .bindTooltip(`<b>${selectedObj.tittle}</b><br>${selectedObj.description}`, SELECTED_TOOLTIP_OPTION)
+                .on('click', () => this.uiStore.selectObject(selectedObj.id))
+                .setZIndexOffset(1000)
+                .addTo(this.selectLayer);
+        }
+    }
+}
