@@ -86,7 +86,7 @@ export class MarkersLayerService {
                 icon: NORMAL_ICONS[obj.type]
             });
             marker
-                .bindTooltip(`<b>${obj.tittle}</b><br>${obj.description}`, NORMAL_TOOLTIP_OPTION)
+                .bindTooltip(`<b>${obj.title}</b><br>${obj.description}`, NORMAL_TOOLTIP_OPTION)
                 .on('click', () => this.uiStore.selectObject(obj.id))
                 .addTo(this.markerLayer);
         });
@@ -102,7 +102,7 @@ export class MarkersLayerService {
                 icon: SELECTED_ICONS[selectedObj.type]
             });
             marker
-                .bindTooltip(`<b>${selectedObj.tittle}</b><br>${selectedObj.description}`, SELECTED_TOOLTIP_OPTION)
+                .bindTooltip(`<b>${selectedObj.title}</b><br>${selectedObj.description}`, SELECTED_TOOLTIP_OPTION)
                 .on('click', () => this.uiStore.selectObject(selectedObj.id))
                 .setZIndexOffset(1000)
                 .addTo(this.selectLayer);

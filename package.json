@@ -3,11 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --open",
+    "start": "ng serve --open --host 0.0.0.0",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "json-server": "json-server --watch ./json-server/db.json"
+    "json-server": "json-server --watch ./json-server/db.json --host  0.0.0.0"
   },
   "prettier": {
     "printWidth": 100,

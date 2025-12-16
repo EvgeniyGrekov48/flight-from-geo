@@ -7,11 +7,13 @@ import {
   signal
 } from '@angular/core';
 import { MainLayoutComponent } from "./ui/main-layout/main-layout.component";
+import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
+    provideHttpClient(),
   ]
 };
 
