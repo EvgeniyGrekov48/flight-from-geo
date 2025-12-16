@@ -1,26 +1,6 @@
 {
   "mapObjects": [
     {
-      "id": 1,
-      "title": "Гора Пикет",
-      "description": "Отличное место для парапланеризма",
-      "coords": {
-        "lat": 44.101,
-        "lng": 39.023
-      },
-      "type": "paragliding"
-    },
-    {
-      "id": 2,
-      "title": "Красная Поляна",
-      "description": "Мощные термические потоки",
-      "coords": {
-        "lat": 43.679,
-        "lng": 40.204
-      },
-      "type": "thermal"
-    },
-    {
       "id": 3,
       "title": "Аэродром Южный",
       "description": "Можно полетать с мотором",
@@ -49,6 +29,26 @@
         "lng": 38.96
       },
       "type": "paragliding"
+    },
+        {
+      "id": 1,
+      "title": "Гора Пикет",
+      "description": "Отличное место для парапланеризма",
+      "coords": {
+        "lat": 44.101,
+        "lng": 39.023
+      },
+      "type": "paragliding"
+    },
+    {
+      "id": 2,
+      "title": "Красная Поляна",
+      "description": "Мощные термические потоки",
+      "coords": {
+        "lat": 43.679,
+        "lng": 40.204
+      },
+      "type": "thermal"
     }
   ]
 }

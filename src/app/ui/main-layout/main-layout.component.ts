@@ -13,7 +13,7 @@ import { MapObjectListComponent } from "../../features/map-object-list/map-objec
 export class MainLayoutComponent {
   private readonly uiStore = inject(UIStore);
 
-  protected readonly SIDEBAR__WIDTH = 30
+  protected readonly SIDEBAR__WIDTH = 40
   protected readonly SIDEBAR__TRANSITION = this.uiStore.SIDEBAR__TRANSITION
 
   protected readonly isSidebarOpen = this.uiStore.isSidebarOpen;
