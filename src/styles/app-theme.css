@@ -1,6 +1,6 @@
 :root {
   /* Главный акцентный цвет */
-  --color-main: hsl(260, 100%, %);
+  --color-main: hsl(260, 100%, 50%);
   --color-main-dark: hsl(260, 100%, 40%);
   --color-main-light: hsl(260, 100%, 65%);
   
