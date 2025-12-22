@@ -25,7 +25,8 @@
               "node_modules/@taiga-ui/core/styles/taiga-ui-theme.less",
               "node_modules/@taiga-ui/core/styles/taiga-ui-fonts.less",
               "node_modules/leaflet/dist/leaflet.css",
-              "src/styles.css"
+              "src/styles/styles.css",
+              "src/styles/app-theme.css"
             ]
           },
           "configurations": {

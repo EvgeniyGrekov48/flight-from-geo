@@ -11,9 +11,9 @@ const SELECTED_MULTIPLIER = 1.5;
 const SIZE = (radius: number, border: number) => radius + border;
 
 const MARKER_COLORS = {
-    [EnumMapObject.PARAGLIDING]: '#007bff',
-    [EnumMapObject.THERMAL]: '#dc3545',
-    [EnumMapObject.USER]: '#28a745'
+    [EnumMapObject.PARAGLIDING]: 'hsl(210, 100%, 50%)',
+    [EnumMapObject.THERMAL]: 'hsl(0, 75%, 56%)',
+    [EnumMapObject.USER]: 'hsl(140, 60%, 45%)'
 };
 
 const createIcon = (type: EnumMapObject, isSelected: boolean): L.DivIcon => {
