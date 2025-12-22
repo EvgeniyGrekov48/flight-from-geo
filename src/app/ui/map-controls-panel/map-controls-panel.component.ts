@@ -1,19 +1,19 @@
 import { Component, output, input } from '@angular/core';
 import { TuiButton, TuiIcon } from '@taiga-ui/core';
+import {TuiHint} from '@taiga-ui/core/directives';
 
 @Component({
   selector: 'app-map-controls-panel',
-  imports: [TuiIcon, TuiButton],
+  imports: [TuiIcon, TuiButton, TuiHint],
   templateUrl: './map-controls-panel.component.html',
   styleUrls: ['./map-controls-panel.component.css']
 })
 export class MapControlsPanelComponent {
-  // Входные параметры (минимальные!)
-  isSidebarOpen = input(false);
-  isLocating = input(false); // Для состояния загрузки геолокации
-  zoomLevel = input(7); // Текущий зум карты
 
-  // Выходные события (чистая коммуникация)
+  isSidebarOpen = input();
+  isLocating = input();
+  zoomLevel = input();
+
   toggleSidebar = output<void>();
   locateUser = output<void>();
   zoomIn = output<void>();
