@@ -1,0 +1,54 @@
+<div class="controls-panel">
+  <button 
+    tuiIconButton
+    appearance="secondary"
+    size="m"
+    class="control-button"
+    (click)="toggleSidebar.emit()"
+    [title]="isSidebarOpen() ? 'Скрыть панель' : 'Показать панель'"
+  >
+    <tui-icon 
+      [icon]="isSidebarOpen() ? '@tui.sidebar-open' : '@tui.sidebar-close'"
+    ></tui-icon>
+  </button>
+
+  <div class="controls-group">
+    <button 
+      tuiIconButton
+      appearance="secondary"
+      size="m"
+      class="control-button"
+      (click)="locateUser.emit()"
+      [title]="'Моё местоположение'"
+      [disabled]="isLocating()"
+    >
+      @if (isLocating()) {
+        <tui-icon icon="@tui.locate" class="spin"></tui-icon>
+      } @else {
+        <tui-icon icon="@tui.locate"></tui-icon>
+      }
+    </button>
+
+    <button 
+      tuiIconButton
+      appearance="secondary"
+      size="m"
+      class="control-button"
+      (click)="zoomIn.emit()"
+      title="Увеличить"
+    >
+      <tui-icon icon="zoom-in"></tui-icon>
+    </button>
+    
+    <button 
+      tuiIconButton
+      appearance="secondary"
+      size="m"
+      class="control-button"
+      (click)="zoomOut.emit()"
+      title="Уменьшить"
+    >
+      <tui-icon icon="zoom-out"></tui-icon>
+    </button>
+  </div>
+</div>
