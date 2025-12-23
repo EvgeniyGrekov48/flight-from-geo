@@ -4,12 +4,12 @@
     appearance="secondary"
     size="m"
     class="control-button"
-    (click)="toggleSidebar.emit()"
-    [title]="isSidebarOpen() ? 'Скрыть панель' : 'Показать панель'"
+    (click)="onToggleSidebar()"
+    [tuiHint]="sidebarHint()"
+    tuiHintDirection="left"
+    type="button"
   >
-    <tui-icon 
-      [icon]="isSidebarOpen() ? '@tui.sidebar-open' : '@tui.sidebar-close'"
-    ></tui-icon>
+    <tui-icon [icon]="sidebarIcon()"></tui-icon>
   </button>
 
   <div class="controls-group">
@@ -18,15 +18,13 @@
       appearance="secondary"
       size="m"
       class="control-button"
-      (click)="locateUser.emit()"
-      [title]="'Моё местоположение'"
+      (click)="onLocateUser()"
+      tuiHintDirection="left"
+      tuiHint="Моё местоположение"
       [disabled]="isLocating()"
+      type="button"
     >
-      @if (isLocating()) {
-        <tui-icon icon="@tui.locate" class="spin"></tui-icon>
-      } @else {
-        <tui-icon icon="@tui.locate"></tui-icon>
-      }
+      <tui-icon icon="@tui.locate"></tui-icon>
     </button>
 
     <button 
@@ -34,8 +32,10 @@
       appearance="secondary"
       size="m"
       class="control-button"
-      (click)="zoomIn.emit()"
-      tuiHint="ggg"
+      (click)="onZoomIn()"
+      tuiHintDirection="left"
+      tuiHint="Увеличить масштаб"
+      type="button"
     >
       <tui-icon icon="zoom-in"></tui-icon>
     </button>
@@ -45,11 +45,12 @@
       appearance="secondary"
       size="m"
       class="control-button"
-      (click)="zoomOut.emit()"
-      title="Уменьшить"
+      (click)="onZoomOut()"
+      tuiHintDirection="left"
+      tuiHint="Уменьшить масштаб"
+      type="button"
     >
       <tui-icon icon="zoom-out"></tui-icon>
     </button>
-
   </div>
 </div>

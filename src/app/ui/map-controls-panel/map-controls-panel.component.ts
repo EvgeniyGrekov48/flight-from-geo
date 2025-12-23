@@ -1,21 +1,49 @@
-import { Component, output, input } from '@angular/core';
+import { Component, output, input, computed, ChangeDetectionStrategy } from '@angular/core';
 import { TuiButton, TuiIcon } from '@taiga-ui/core';
-import {TuiHint} from '@taiga-ui/core/directives';
+import { TuiHint } from '@taiga-ui/core/directives';
 
 @Component({
   selector: 'app-map-controls-panel',
-  imports: [TuiIcon, TuiButton, TuiHint],
+  imports: [TuiIcon, TuiButton, TuiHint ],
   templateUrl: './map-controls-panel.component.html',
-  styleUrls: ['./map-controls-panel.component.css']
+  styleUrl: './map-controls-panel.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
+
 })
 export class MapControlsPanelComponent {
+  public readonly isSidebarOpen = input.required<boolean>();
+  public readonly isLocating = input.required<boolean>();
+  public readonly zoomLevel = input.required<number>();
 
-  isSidebarOpen = input();
-  isLocating = input();
-  zoomLevel = input();
+  public readonly toggleSidebar = output<void>();
+  public readonly locateUser = output<void>();
+  public readonly zoomOut = output<void>();
+  public readonly zoomIn = output<void>();
 
-  toggleSidebar = output<void>();
-  locateUser = output<void>();
-  zoomIn = output<void>();
-  zoomOut = output<void>();
+  protected readonly sidebarHint = computed(() => 
+    this.isSidebarOpen() ? 'Скрыть панель' : 'Показать панель'
+  );
+
+  protected readonly sidebarIcon = computed(() =>
+    this.isSidebarOpen() ? '@tui.sidebar-open' : '@tui.sidebar-close'
+  );
+
+  protected onToggleSidebar(): void {
+    this.toggleSidebar.emit();
+  }
+
+  protected onLocateUser(): void {
+    if (!this.isLocating()) {
+      this.locateUser.emit();
+    }
+  }
+
+  protected onZoomIn(): void {
+    this.zoomIn.emit();
+  }
+
+  protected onZoomOut(): void {
+    this.zoomOut.emit();
+  }
+
 }
