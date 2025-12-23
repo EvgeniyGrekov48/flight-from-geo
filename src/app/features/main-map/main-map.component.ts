@@ -55,12 +55,13 @@ export class MainMapComponent implements OnInit {
     effect(() => {
       const _coords = this.navigatorService.getCoords();
       this.mapInstance?.flyTo([_coords.latitude, _coords.longitude], this.mapInstance.getZoom());
+      this._isLocating.set(false)
     });
   }
 
   private initEffectInvalidateSize(): void {
     effect(() => {
-      const _obs = this.isSidebarOpen();
+      this.isSidebarOpen();
       setTimeout(() => this.mapInstance?.invalidateSize(), this.uiStore.SIDEBAR__TRANSITION + 1)
     });
   }
@@ -68,7 +69,7 @@ export class MainMapComponent implements OnInit {
   protected onMapReady(map: L.Map) {
     this.mapInstance = map;
     map.removeControl(map.zoomControl);
-    map.attributionControl.setPrefix("LLL");
+    map.attributionControl.setPrefix("Leaflet");
   }
 
   //-------USER_ACTION-----
@@ -79,7 +80,6 @@ export class MainMapComponent implements OnInit {
   protected flyToLocateUser() {
     this._isLocating.set(true);
     this.navigatorService.updateCurrentPosition();
-    setTimeout(() => this._isLocating.set(false), 2000);
   }
 
 }
