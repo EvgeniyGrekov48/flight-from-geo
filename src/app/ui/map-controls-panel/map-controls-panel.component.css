@@ -1,0 +1,36 @@
+.controls-panel {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  background-color: hsla(var(--gray-100-hsl), 0.95);
+  border-radius: var(--radius-medium);
+  padding: var(--space-sm);
+  box-shadow: var(--shadow-large);
+  backdrop-filter: blur(8px);
+}
+
+.controls-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.control-button {
+  transition: all var(--transition-fast);
+  border: 1px solid transparent;
+}
+
+.control-button:hover:not(:disabled) {
+  border-color: var(--color-main);
+  box-shadow: var(--shadow-medium);
+}
+
+
+.control-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

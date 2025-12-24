@@ -2,19 +2,19 @@
   <div class="main-map--container" 
     leaflet 
     [leafletOptions]="options" 
-    [leafletLayersControl]="layersControlConfig" 
-    [leafletLayers]="[markersLayer()]" 
     [leafletLayer]="selectLayer()" 
     (leafletMapReady)="onMapReady($event)">
   </div>
 
-  <div class="custom-controls">
-    <button tuiButton size="s" (click)="toggleSidebar()" class="sidebar-toggle-btn">
-      {{ isSidebarOpen() ? '▶' : '◀' }}
-    </button>
-
-    <button tuiButton class="geolocation-btn" size="s" (click)="flyToLocateUser()">
-      МОЯ
-    </button>
-  </div>
+  @if (mapInstance) {
+    <app-map-controls-panel
+      [isSidebarOpen]="isSidebarOpen()"
+      [isLocating]="isLocating()"
+      [zoomLevel]="mapInstance.getZoom()"
+      (toggleSidebar)="toggleSidebar()"
+      (locateUser)="flyToLocateUser()"
+      (zoomIn)="mapInstance.zoomIn()"
+      (zoomOut)="mapInstance.zoomOut()"
+    />
+  }
 </div>

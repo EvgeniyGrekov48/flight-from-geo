@@ -1,0 +1,69 @@
+<div class="controls-panel">
+  <button 
+    tuiIconButton
+    appearance="secondary"
+    size="m"
+    class="control-button"
+    (click)="onSelectLayer()"
+    [tuiHint]="'Переключение слоев'"
+    tuiHintDirection="left"
+    type="button"
+  >
+    <tui-icon icon="@tui.layers"></tui-icon>
+  </button>
+
+  <button 
+    tuiIconButton
+    appearance="secondary"
+    size="m"
+    class="control-button"
+    (click)="onToggleSidebar()"
+    [tuiHint]="sidebarHint()"
+    tuiHintDirection="left"
+    type="button"
+  >
+    <tui-icon [icon]="sidebarIcon()"></tui-icon>
+  </button>
+
+  <div class="controls-group">
+    <button 
+      tuiIconButton
+      appearance="secondary"
+      size="m"
+      class="control-button"
+      (click)="onLocateUser()"
+      tuiHintDirection="left"
+      tuiHint="Моё местоположение"
+      [disabled]="isLocating()"
+      type="button"
+    >
+      <tui-icon icon="@tui.locate"></tui-icon>
+    </button>
+
+    <button 
+      tuiIconButton
+      appearance="secondary"
+      size="m"
+      class="control-button"
+      (click)="onZoomIn()"
+      tuiHintDirection="left"
+      tuiHint="Увеличить масштаб"
+      type="button"
+    >
+      <tui-icon icon="zoom-in"></tui-icon>
+    </button>
+    
+    <button 
+      tuiIconButton
+      appearance="secondary"
+      size="m"
+      class="control-button"
+      (click)="onZoomOut()"
+      tuiHintDirection="left"
+      tuiHint="Уменьшить масштаб"
+      type="button"
+    >
+      <tui-icon icon="zoom-out"></tui-icon>
+    </button>
+  </div>
+</div>
