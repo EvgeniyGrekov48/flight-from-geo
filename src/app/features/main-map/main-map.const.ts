@@ -1,5 +1,4 @@
-import { LeafletControlLayersConfig } from "@bluehalo/ngx-leaflet";
-import { latLng, Layer, MapOptions, tileLayer } from "leaflet";
+import { latLng, MapOptions, tileLayer } from "leaflet";
 
 const STREET_LAYER = tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -21,16 +20,7 @@ export const OPTIONS_MAP = {
     layers: [STREET_LAYER],
     zoom: 7,
     center: latLng([58, 39]),
+    zoomControl: false,
 } as MapOptions
-
-export const LAYERS_CONTROL_CONFIG = {
-    baseLayers: {
-        "Улицы": STREET_LAYER,
-        'Спутник': SATELITE_LAYER,
-        "Топо мир": OPENTOPO_LAYER,
-        'Рельеф': ESRI_TERRAIN_LAYER,
-    },
-    overlays: {}
-} as LeafletControlLayersConfig
 
 

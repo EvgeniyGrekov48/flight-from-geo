@@ -4,6 +4,19 @@
     appearance="secondary"
     size="m"
     class="control-button"
+    (click)="onSelectLayer()"
+    [tuiHint]="'Переключение слоев'"
+    tuiHintDirection="left"
+    type="button"
+  >
+    <tui-icon icon="@tui.layers"></tui-icon>
+  </button>
+
+  <button 
+    tuiIconButton
+    appearance="secondary"
+    size="m"
+    class="control-button"
     (click)="onToggleSidebar()"
     [tuiHint]="sidebarHint()"
     tuiHintDirection="left"

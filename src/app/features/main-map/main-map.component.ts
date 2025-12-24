@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, effect, inject, OnInit, signal } from '@angular/core';
-import { LeafletDirective, LeafletLayerDirective, LeafletLayersControlDirective, LeafletLayersDirective } from '@bluehalo/ngx-leaflet';
-import { LAYERS_CONTROL_CONFIG, OPTIONS_MAP } from './main-map.const';
+import { LeafletDirective, LeafletLayerDirective } from '@bluehalo/ngx-leaflet';
+import { OPTIONS_MAP } from './main-map.const';
 import { NavigatorService } from '../../core/services/navigator.service';
 import { UIStore } from '../../core/stores/ui.store';
 import L from 'leaflet';
@@ -12,11 +12,12 @@ import { MapControlsPanelComponent } from "../../ui/map-controls-panel/map-contr
 @Component({
   selector: 'app-main-map',
   standalone: true,
-  imports: [CommonModule,
+  imports: [
+    CommonModule,
     LeafletDirective,
-    LeafletLayersControlDirective,
-    LeafletLayersDirective,
-    LeafletLayerDirective, MapControlsPanelComponent],
+    LeafletLayerDirective, 
+    MapControlsPanelComponent
+  ],
   providers: [MarkersLayerService],
   templateUrl: './main-map.component.html',
   styleUrl: './main-map.component.css',
@@ -30,13 +31,12 @@ export class MainMapComponent implements OnInit {
 
   protected mapInstance?: L.Map;
 
-  protected readonly markersLayer = this.markersLayerService.markerLayerSignal;
-  protected readonly selectLayer = this.markersLayerService.selectedLayerSignal;
+  protected readonly markersLayer = this.markersLayerService.markerLayer;
+  protected readonly selectLayer = this.markersLayerService.selectedLayer;
 
   protected readonly isSidebarOpen = this.uiStore.isSidebarOpen;
 
   protected readonly options = OPTIONS_MAP
-  protected readonly layersControlConfig = LAYERS_CONTROL_CONFIG
 
   private _isLocating = signal(false);
   protected readonly isLocating = this._isLocating.asReadonly();
@@ -68,7 +68,6 @@ export class MainMapComponent implements OnInit {
 
   protected onMapReady(map: L.Map) {
     this.mapInstance = map;
-    map.removeControl(map.zoomControl);
     map.attributionControl.setPrefix("Leaflet");
   }
 

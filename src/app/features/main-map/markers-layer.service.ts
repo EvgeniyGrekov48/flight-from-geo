@@ -65,21 +65,21 @@ export class MarkersLayerService {
     private readonly mapObjectService = inject(MapObjectService);
     private readonly uiStore = inject(UIStore);
 
-    private readonly markerLayer = L.layerGroup();
-    private readonly selectLayer = L.layerGroup();
+    private readonly _markerLayer = L.layerGroup();
+    private readonly _selectLayer = L.layerGroup();
 
-    public readonly markerLayerSignal = computed(() => {
+    public readonly markerLayer = computed(() => {
         this.updateMarkerLayer();
-        return this.markerLayer;
+        return this._markerLayer;
     });
 
-    public readonly selectedLayerSignal = computed(() => {
+    public readonly selectedLayer = computed(() => {
         this.updateSelectLayer();
-        return this.selectLayer;
+        return this._selectLayer;
     });
 
     private updateMarkerLayer(): void {
-        this.markerLayer.clearLayers();
+        this._markerLayer.clearLayers();
         const objects = this.mapObjectService.getObjects();
         objects.forEach(obj => {
             const marker = L.marker([obj.coords.lat, obj.coords.lng], {
@@ -88,12 +88,12 @@ export class MarkersLayerService {
             marker
                 .bindTooltip(`<b>${obj.title}</b><br>${obj.description}`, NORMAL_TOOLTIP_OPTION)
                 .on('click', () => this.uiStore.selectObject(obj.id))
-                .addTo(this.markerLayer);
+                .addTo(this._markerLayer);
         });
     }
 
     private updateSelectLayer(): void {
-        this.selectLayer.clearLayers();
+        this._selectLayer.clearLayers();
         const selectedId = this.uiStore.getSelectedObjectId();
         const selectedObj = this.mapObjectService.getObjects()
             .find(obj => obj.id === selectedId);
@@ -105,7 +105,7 @@ export class MarkersLayerService {
                 .bindTooltip(`<b>${selectedObj.title}</b><br>${selectedObj.description}`, SELECTED_TOOLTIP_OPTION)
                 .on('click', () => this.uiStore.selectObject(selectedObj.id))
                 .setZIndexOffset(1000)
-                .addTo(this.selectLayer);
+                .addTo(this._selectLayer);
         }
     }
 }

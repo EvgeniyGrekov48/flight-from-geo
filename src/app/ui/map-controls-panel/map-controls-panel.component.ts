@@ -28,14 +28,16 @@ export class MapControlsPanelComponent {
     this.isSidebarOpen() ? '@tui.sidebar-open' : '@tui.sidebar-close'
   );
 
+  protected onSelectLayer(): void {
+    console.log("Select layer")
+  }
+
   protected onToggleSidebar(): void {
     this.toggleSidebar.emit();
   }
 
   protected onLocateUser(): void {
-    if (!this.isLocating()) {
-      this.locateUser.emit();
-    }
+    this.locateUser.emit();
   }
 
   protected onZoomIn(): void {

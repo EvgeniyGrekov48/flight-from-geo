@@ -25,14 +25,10 @@
 }
 
 .control-button:hover:not(:disabled) {
-  transform: translateY(-1px);
   border-color: var(--color-main);
   box-shadow: var(--shadow-medium);
 }
 
-.control-button:active:not(:disabled) {
-  transform: translateY(0);
-}
 
 .control-button:disabled {
   opacity: 0.5;
