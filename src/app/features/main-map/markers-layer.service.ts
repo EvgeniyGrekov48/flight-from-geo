@@ -1,6 +1,6 @@
-import { Injectable, inject, computed } from '@angular/core';
-import L, { TooltipOptions } from 'leaflet';
-import { EnumMapObject } from '../../core/types/types';
+import { Injectable, inject, computed, effect } from '@angular/core';
+import L, { LayerGroup, TooltipOptions } from 'leaflet';
+import { EnumMapObject, MapObjectModel } from '../../core/types/types';
 import { MapObjectService } from '../../core/services/map-object.service';
 import { UIStore } from '../../core/stores/ui.store';
 
@@ -65,22 +65,19 @@ export class MarkersLayerService {
     private readonly mapObjectService = inject(MapObjectService);
     private readonly uiStore = inject(UIStore);
 
-    private readonly _markerLayer = L.layerGroup();
-    private readonly _selectLayer = L.layerGroup();
-
-    public readonly markerLayer = computed(() => {
-        this.updateMarkerLayer();
-        return this._markerLayer;
+    public readonly markersLayer = computed(() => {
+        const objects = this.mapObjectService.getObjects()
+        return this.createMarkersLayer(objects)
     });
 
     public readonly selectedLayer = computed(() => {
-        this.updateSelectLayer();
-        return this._selectLayer;
+        const id = this.uiStore.getSelectedObjectId()
+        const objects = this.mapObjectService.getObjects()
+        return this.createSelectedMarkerLayer(id, objects)
     });
 
-    private updateMarkerLayer(): void {
-        this._markerLayer.clearLayers();
-        const objects = this.mapObjectService.getObjects();
+    private createMarkersLayer(objects: MapObjectModel[]): LayerGroup {
+        const _markersLayer = L.layerGroup();
         objects.forEach(obj => {
             const marker = L.marker([obj.coords.lat, obj.coords.lng], {
                 icon: NORMAL_ICONS[obj.type]
@@ -88,15 +85,14 @@ export class MarkersLayerService {
             marker
                 .bindTooltip(`<b>${obj.title}</b><br>${obj.description}`, NORMAL_TOOLTIP_OPTION)
                 .on('click', () => this.uiStore.selectObject(obj.id))
-                .addTo(this._markerLayer);
+                .addTo(_markersLayer);
         });
+        return _markersLayer
     }
 
-    private updateSelectLayer(): void {
-        this._selectLayer.clearLayers();
-        const selectedId = this.uiStore.getSelectedObjectId();
-        const selectedObj = this.mapObjectService.getObjects()
-            .find(obj => obj.id === selectedId);
+    private createSelectedMarkerLayer(id: number | null, objects: MapObjectModel[]): LayerGroup {
+        const _selectedLayer = L.layerGroup();
+        const selectedObj = objects.find(obj => obj.id === id);
         if (selectedObj) {
             const marker = L.marker([selectedObj.coords.lat, selectedObj.coords.lng], {
                 icon: SELECTED_ICONS[selectedObj.type]
@@ -105,7 +101,8 @@ export class MarkersLayerService {
                 .bindTooltip(`<b>${selectedObj.title}</b><br>${selectedObj.description}`, SELECTED_TOOLTIP_OPTION)
                 .on('click', () => this.uiStore.selectObject(selectedObj.id))
                 .setZIndexOffset(1000)
-                .addTo(this._selectLayer);
+                .addTo(_selectedLayer);
         }
+        return _selectedLayer
     }
 }

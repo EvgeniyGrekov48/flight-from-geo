@@ -4,17 +4,17 @@ import { TuiHint } from '@taiga-ui/core/directives';
 
 @Component({
   selector: 'app-map-controls-panel',
-  imports: [TuiIcon, TuiButton, TuiHint ],
+  imports: [TuiIcon, TuiButton, TuiHint],
   templateUrl: './map-controls-panel.component.html',
   styleUrl: './map-controls-panel.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
-
 })
 export class MapControlsPanelComponent {
   public readonly isSidebarOpen = input.required<boolean>();
   public readonly isLocating = input.required<boolean>();
   public readonly zoomLevel = input.required<number>();
 
+  public readonly selectlayer = output<void>();
   public readonly toggleSidebar = output<void>();
   public readonly locateUser = output<void>();
   public readonly zoomOut = output<void>();
@@ -29,7 +29,7 @@ export class MapControlsPanelComponent {
   );
 
   protected onSelectLayer(): void {
-    console.log("Select layer")
+    this.selectlayer.emit()
   }
 
   protected onToggleSidebar(): void {
