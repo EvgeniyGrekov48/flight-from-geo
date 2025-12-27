@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, effect, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, linkedSignal, signal } from '@angular/core';
 import { LeafletDirective, LeafletLayerDirective } from '@bluehalo/ngx-leaflet';
-import { OPTIONS_MAP } from './main-map.const';
+import { LAYERS_BASE__LIST, OPTIONS_MAP } from './main-map.const';
 import { NavigatorService } from '../../core/services/navigator.service';
 import { UIStore } from '../../core/stores/ui.store';
-import L from 'leaflet';
+import L, { Layer } from 'leaflet';
 import { MarkersLayerService } from './markers-layer.service';
 import { MapObjectService } from '../../core/services/map-object.service';
 import { MapControlsPanelComponent } from "../../ui/map-controls-panel/map-controls-panel.component";
+import { BaseLayerDescriptionModel } from '../../core/types/types';
 
 @Component({
   selector: 'app-main-map',
@@ -15,7 +16,7 @@ import { MapControlsPanelComponent } from "../../ui/map-controls-panel/map-contr
   imports: [
     CommonModule,
     LeafletDirective,
-    LeafletLayerDirective, 
+    LeafletLayerDirective,
     MapControlsPanelComponent
   ],
   providers: [MarkersLayerService],
@@ -23,7 +24,7 @@ import { MapControlsPanelComponent } from "../../ui/map-controls-panel/map-contr
   styleUrl: './main-map.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MainMapComponent implements OnInit {
+export class MainMapComponent {
   private readonly uiStore = inject(UIStore);
   private readonly mapOvjectService = inject(MapObjectService)
   private readonly navigatorService = inject(NavigatorService)
@@ -31,54 +32,69 @@ export class MainMapComponent implements OnInit {
 
   protected mapInstance?: L.Map;
 
-  protected readonly markersLayer = this.markersLayerService.markerLayer;
-  protected readonly selectLayer = this.markersLayerService.selectedLayer;
+  private readonly markersLayer = this.markersLayerService.markersLayer;
+  protected readonly selectedLayer = this.markersLayerService.selectedLayer;
 
   protected readonly isSidebarOpen = this.uiStore.isSidebarOpen;
+  protected readonly getCurrentBaseLayer = this.uiStore.getCurrentBaseLayer
 
   protected readonly options = OPTIONS_MAP
-
-  private _isLocating = signal(false);
+  protected readonly layersBaseList = LAYERS_BASE__LIST
+  
+  private _isLocating = linkedSignal(() => !this.navigatorService.getCoords());
   protected readonly isLocating = this._isLocating.asReadonly();
 
   constructor() {
+    this.initeffectAddMarkersLayer()
     this.initEffectViewLocateUser()
     this.initEffectInvalidateSize()
   }
 
-  ngOnInit(): void {
-    this.mapOvjectService.loadMapObjects()
+  //------INIT-------
+  private initeffectAddMarkersLayer(): void {
+    effect(() => {
+      const _markersLayer = this.markersLayer()
+      this.mapInstance?.removeLayer(_markersLayer)
+      this.mapInstance?.addLayer(_markersLayer)
+    })
   }
 
-  //------INIT-------
   private initEffectViewLocateUser(): void {
     effect(() => {
       const _coords = this.navigatorService.getCoords();
       this.mapInstance?.flyTo([_coords.latitude, _coords.longitude], this.mapInstance.getZoom());
-      this._isLocating.set(false)
     });
   }
 
   private initEffectInvalidateSize(): void {
     effect(() => {
-      this.isSidebarOpen();
+      const _isSidebarOpen = this.isSidebarOpen();
       setTimeout(() => this.mapInstance?.invalidateSize(), this.uiStore.SIDEBAR__TRANSITION + 1)
     });
   }
 
-  protected onMapReady(map: L.Map) {
+  protected onMapReady(map: L.Map): void {
     this.mapInstance = map;
-    map.attributionControl.setPrefix("Leaflet");
+    this.mapInstance.attributionControl.setPrefix("Leaflet");
+    this._isLocating.set(false)
+    this.mapOvjectService.loadMapObjects()
   }
 
-  //-------USER_ACTION-----
-  protected toggleSidebar() {
+  //-------USER_ACTIONS-----
+  protected toggleSidebar(): void {
     this.uiStore.toggleSidebar();
   }
 
-  protected flyToLocateUser() {
+  protected flyToLocateUser(): void {
     this._isLocating.set(true);
     this.navigatorService.updateCurrentPosition();
+  }
+
+  //------CHILDS_ACTIONS-----
+  onChangeLayer(newLayer: BaseLayerDescriptionModel): void {
+    this.mapInstance!.removeLayer(this.uiStore.getCurrentBaseLayer().layer)
+    this.mapInstance!.addLayer(newLayer.layer)
+    this.uiStore.changeCurrentBaseLayer(newLayer)
   }
 
 }

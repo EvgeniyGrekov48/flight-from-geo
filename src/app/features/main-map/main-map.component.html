@@ -2,7 +2,7 @@
   <div class="main-map--container" 
     leaflet 
     [leafletOptions]="options" 
-    [leafletLayer]="selectLayer()" 
+    [leafletLayer]="selectedLayer()"
     (leafletMapReady)="onMapReady($event)">
   </div>
 
@@ -11,10 +11,12 @@
       [isSidebarOpen]="isSidebarOpen()"
       [isLocating]="isLocating()"
       [zoomLevel]="mapInstance.getZoom()"
+      [layers]="layersBaseList"
+      [currentLayer]="getCurrentBaseLayer()"
+      (changelayer)="onChangeLayer($event)"
       (toggleSidebar)="toggleSidebar()"
       (locateUser)="flyToLocateUser()"
       (zoomIn)="mapInstance.zoomIn()"
-      (zoomOut)="mapInstance.zoomOut()"
-    />
+      (zoomOut)="mapInstance.zoomOut()"/>
   }
 </div>

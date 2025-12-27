@@ -1,7 +1,9 @@
 
-// API          | sufix Request / Response
+// API          | sufix API
 // Inner types  | sufix Model
 // From Library | sufix FromLib
+
+import { Layer } from "leaflet";
 
 export enum EnumMapObject {
     PARAGLIDING = 'paragliding',
@@ -14,10 +16,16 @@ export interface LatLngFromLib {
     lng: number
 }
 
-export interface MapObjectModel {
+export interface MapObjectAPI {
     type: EnumMapObject;
     id: number;
     title: string;
     description: string;
     coords: LatLngFromLib;
+}
+
+export interface BaseLayerDescriptionModel {
+    id: string,
+    layer: Layer,
+    title: string
 }
