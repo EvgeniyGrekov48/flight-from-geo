@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, effect, inject, linkedSignal, signal } from '@angular/core';
 import { LeafletDirective, LeafletLayerDirective } from '@bluehalo/ngx-leaflet';
-import { OPTIONS_MAP, SATELITE_LAYER, STREET_LAYER } from './main-map.const';
+import { LAYERS_BASE__LIST, OPTIONS_MAP } from './main-map.const';
 import { NavigatorService } from '../../core/services/navigator.service';
 import { UIStore } from '../../core/stores/ui.store';
-import L from 'leaflet';
+import L, { Layer } from 'leaflet';
 import { MarkersLayerService } from './markers-layer.service';
 import { MapObjectService } from '../../core/services/map-object.service';
 import { MapControlsPanelComponent } from "../../ui/map-controls-panel/map-controls-panel.component";
+import { BaseLayerDescriptionModel } from '../../core/types/types';
 
 @Component({
   selector: 'app-main-map',
@@ -35,9 +36,11 @@ export class MainMapComponent {
   protected readonly selectedLayer = this.markersLayerService.selectedLayer;
 
   protected readonly isSidebarOpen = this.uiStore.isSidebarOpen;
+  protected readonly getCurrentBaseLayer = this.uiStore.getCurrentBaseLayer
 
   protected readonly options = OPTIONS_MAP
-
+  protected readonly layersBaseList = LAYERS_BASE__LIST
+  
   private _isLocating = linkedSignal(() => !this.navigatorService.getCoords());
   protected readonly isLocating = this._isLocating.asReadonly();
 
@@ -88,9 +91,10 @@ export class MainMapComponent {
   }
 
   //------CHILDS_ACTIONS-----
-  onSelectLayer(): void {
-    this.mapInstance?.removeLayer(STREET_LAYER)
-    this.mapInstance?.addLayer(SATELITE_LAYER)
+  onChangeLayer(newLayer: BaseLayerDescriptionModel): void {
+    this.mapInstance!.removeLayer(this.uiStore.getCurrentBaseLayer().layer)
+    this.mapInstance!.addLayer(newLayer.layer)
+    this.uiStore.changeCurrentBaseLayer(newLayer)
   }
 
 }

@@ -1,6 +1,6 @@
 import { Injectable, inject, computed, effect } from '@angular/core';
 import L, { LayerGroup, TooltipOptions } from 'leaflet';
-import { EnumMapObject, MapObjectModel } from '../../core/types/types';
+import { EnumMapObject, MapObjectAPI } from '../../core/types/types';
 import { MapObjectService } from '../../core/services/map-object.service';
 import { UIStore } from '../../core/stores/ui.store';
 
@@ -76,7 +76,7 @@ export class MarkersLayerService {
         return this.createSelectedMarkerLayer(id, objects)
     });
 
-    private createMarkersLayer(objects: MapObjectModel[]): LayerGroup {
+    private createMarkersLayer(objects: MapObjectAPI[]): LayerGroup {
         const _markersLayer = L.layerGroup();
         objects.forEach(obj => {
             const marker = L.marker([obj.coords.lat, obj.coords.lng], {
@@ -90,7 +90,7 @@ export class MarkersLayerService {
         return _markersLayer
     }
 
-    private createSelectedMarkerLayer(id: number | null, objects: MapObjectModel[]): LayerGroup {
+    private createSelectedMarkerLayer(id: number | null, objects: MapObjectAPI[]): LayerGroup {
         const _selectedLayer = L.layerGroup();
         const selectedObj = objects.find(obj => obj.id === id);
         if (selectedObj) {

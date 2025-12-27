@@ -1,42 +1,8 @@
 .map-wrapper {
   height: 100%;
-  position: relative; /*Устанавливает кнопку на место*/
+  position: relative; /*Устанавливает map-controls-panel на место*/
 }
 
 .main-map--container {
   height: 100%;
-}
-
-.custom-controls {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-  position: absolute;
-  bottom: 100px;
-  right: var(--space-md);
-  z-index: 1000;
-}
-
-.geolocation-btn,
-.sidebar-toggle-btn {
-  background-color: var(--color-main);
-  color: white;
-  border: none;
-  border-radius: var(--radius-small);
-  box-shadow: var(--shadow-small);
-  transition: all var(--transition-fast);
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.geolocation-btn:hover,
-.sidebar-toggle-btn:hover {
-  background-color: var(--color-main-dark);
-  box-shadow: var(--shadow-medium);
-  transform: scale(1.05);
 }

@@ -2,7 +2,7 @@
   <div class="main-map--container" 
     leaflet 
     [leafletOptions]="options" 
-    [leafletLayer]="selectedLayer()" 
+    [leafletLayer]="selectedLayer()"
     (leafletMapReady)="onMapReady($event)">
   </div>
 
@@ -11,7 +11,9 @@
       [isSidebarOpen]="isSidebarOpen()"
       [isLocating]="isLocating()"
       [zoomLevel]="mapInstance.getZoom()"
-      (selectlayer)="onSelectLayer()"
+      [layers]="layersBaseList"
+      [currentLayer]="getCurrentBaseLayer()"
+      (changelayer)="onChangeLayer($event)"
       (toggleSidebar)="toggleSidebar()"
       (locateUser)="flyToLocateUser()"
       (zoomIn)="mapInstance.zoomIn()"

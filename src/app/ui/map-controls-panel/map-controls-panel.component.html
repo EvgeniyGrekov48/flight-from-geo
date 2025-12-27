@@ -1,13 +1,14 @@
 <div class="controls-panel">
   <button 
     tuiIconButton
+    tuiDropdownHover
     appearance="secondary"
     size="m"
-    class="control-button"
-    (click)="onSelectLayer()"
-    [tuiHint]="'Переключение слоев'"
-    tuiHintDirection="left"
-    type="button"
+    class="control-button dropdown-trigger"
+    [tuiDropdown]="dropdown"
+    tuiDropdownAlign="left"
+    [tuiDropdownSided]="true"
+    [tuiDropdownOffset]="10"
   >
     <tui-icon icon="@tui.layers"></tui-icon>
   </button>
@@ -67,3 +68,18 @@
     </button>
   </div>
 </div>
+
+<ng-template #dropdown>
+  <div class="dropdown">
+    @for (layer of layers(); track layer.id) {
+      <div 
+        class="dropdown-item"
+        [class.selected]="isCheckedLayer(layer)"
+        (click)="onChangeLayer(layer)"
+      >
+        <div class="radio-indicator"></div>
+        <span class="label">{{ layer.title }}</span>
+      </div>
+    }
+  </div>
+</ng-template>

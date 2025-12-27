@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
-import { MapObjectModel } from '../../core/types/types';
+import { MapObjectAPI } from '../../core/types/types';
 import { TuiSurface, TuiTitle } from '@taiga-ui/core';
 
 @Component({
@@ -10,7 +10,7 @@ import { TuiSurface, TuiTitle } from '@taiga-ui/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MapObjectCardComponent {
-  public readonly object = input.required<MapObjectModel>();
+  public readonly object = input.required<MapObjectAPI>();
   public readonly isSelected = input<boolean>(false);
 
   public readonly clicked = output<void>();

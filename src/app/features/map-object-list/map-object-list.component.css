@@ -1,3 +1,4 @@
 .list-content {
-  margin: 1rem 1.5rem 1rem 1rem;
+  margin: var(--space-md);
+  margin-right: var(--space-lg);
 }

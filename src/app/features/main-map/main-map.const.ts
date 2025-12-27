@@ -1,10 +1,11 @@
 import { latLng, MapOptions, tileLayer } from "leaflet";
+import { BaseLayerDescriptionModel } from "../../core/types/types";
 
-export const STREET_LAYER = tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+const STREET_LAYER = tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 });
 
-export const SATELITE_LAYER = tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+const SATELITE_LAYER = tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
     attribution: 'Tiles © <a href="https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer">Esri</a>'
 });
 
@@ -23,4 +24,22 @@ export const OPTIONS_MAP = {
     zoomControl: false,
 } as MapOptions
 
-
+export const LAYERS_BASE__LIST: BaseLayerDescriptionModel[] = [
+    {
+        id: 'streets',
+        layer: STREET_LAYER,
+        title: 'Улицы'
+    }, { 
+        id: 'satellite', 
+        layer: SATELITE_LAYER, 
+        title: 'Спутник' 
+    }, { 
+        id: 'topo', 
+        layer: OPENTOPO_LAYER, 
+        title: 'Топо' 
+    }, { 
+        id: 'terrain', 
+        layer: ESRI_TERRAIN_LAYER, 
+        title: 'Рельеф' 
+    }
+]

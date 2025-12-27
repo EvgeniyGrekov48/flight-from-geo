@@ -1,3 +1,4 @@
+/* Основные стили панели */
 .controls-panel {
   position: absolute;
   top: var(--space-md);
@@ -6,11 +7,12 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
-  background-color: hsla(var(--gray-100-hsl), 0.95);
   border-radius: var(--radius-medium);
   padding: var(--space-sm);
-  box-shadow: var(--shadow-large);
-  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-medium);
+  backdrop-filter: blur(4px);
+  background: hsla(var(--gray-100), 0.98);
+  border: 1px solid hsla(var(--gray-85), 0.3);
 }
 
 .controls-group {
@@ -21,16 +23,76 @@
 
 .control-button {
   transition: all var(--transition-fast);
-  border: 1px solid transparent;
+  border: 2px solid transparent;
 }
 
 .control-button:hover:not(:disabled) {
-  border-color: var(--color-main);
+  border-color: hsla(var(--color-main), 1);
   box-shadow: var(--shadow-medium);
 }
-
 
 .control-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* Дропдаун */
+.dropdown {
+  background: hsla(var(--gray-100), 0.98);
+  border-radius: var(--radius-medium);
+  box-shadow: var(--shadow-large);
+  backdrop-filter: blur(8px);
+  min-width: 160px;
+  border: 1px solid hsla(var(--gray-85), 0.3);
+  padding: var(--space-xs) 0;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: var(--space-sm) var(--space-md);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+  gap: var(--space-sm);
+  margin: var(--space-xs);
+  border-radius: var(--radius-small);
+  
+  &:hover {
+    background: hsla(var(--gray-85), 0.5);
+  }
+  
+  &.selected {
+    background: hsla(var(--color-main), 0.1);
+  }
+}
+
+.radio-indicator {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid hsla(var(--gray-70), 1);
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+  
+  .selected & {
+    border-color: hsla(var(--color-main), 1);
+    background: hsla(var(--color-main), 1);
+    box-shadow: inset 0 0 0 3px hsla(var(--gray-100), 1);
+  }
+}
+
+.label {
+  color: hsla(var(--gray-20), 1);
+  font-size: 14px;
+  line-height: 1.4;
+  transition: color var(--transition-fast);
+  
+  .selected & {
+    color: hsla(var(--color-main), 1);
+    font-weight: 500;
+  }
+  
+  .dropdown-item:hover & {
+    color: hsla(var(--color-main-dark), 1);
+  }
 }

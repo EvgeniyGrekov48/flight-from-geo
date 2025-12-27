@@ -1,5 +1,5 @@
 import { DestroyRef, inject, Injectable, Signal, signal, WritableSignal } from '@angular/core';
-import { MapObjectModel } from '../types/types';
+import { MapObjectAPI } from '../types/types';
 import { APIService } from './api.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -8,8 +8,8 @@ export class MapObjectService {
   private readonly API = inject(APIService)
   private readonly destroyRef = inject(DestroyRef);
 
-  private readonly _objects: WritableSignal<MapObjectModel[]> = signal([]);
-  public readonly getObjects: Signal<MapObjectModel[]> = this._objects.asReadonly();
+  private readonly _objects: WritableSignal<MapObjectAPI[]> = signal([]);
+  public readonly getObjects: Signal<MapObjectAPI[]> = this._objects.asReadonly();
 
   public loadMapObjects(): void {
     this.API.getMapObjects()
