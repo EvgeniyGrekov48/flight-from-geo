@@ -21,7 +21,7 @@
   --radius-large: 12px;
   
   /* Тени используют hsla с переменной градации серого */
-  --shadow-small: 0 1px 3px hsla(var(--gray-0), 0.15);
+  --shadow-small: 0 1px 4px hsla(var(--gray-0), 0.15);
   --shadow-medium: 0 2px 8px hsla(var(--gray-0), 0.3);
   --shadow-large: 0 4px 12px hsla(var(--gray-0), 0.5);
   
