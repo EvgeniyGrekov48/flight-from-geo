@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, effect, inject, linkedSignal, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, linkedSignal } from '@angular/core';
 import { LeafletDirective, LeafletLayerDirective } from '@bluehalo/ngx-leaflet';
 import { LAYERS_BASE__LIST, OPTIONS_MAP } from './main-map.const';
 import { NavigatorService } from '../../core/services/navigator.service';
 import { UIStore } from '../../core/stores/ui.store';
-import L, { Layer } from 'leaflet';
+import L from 'leaflet';
 import { MarkersLayerService } from './markers-layer.service';
 import { MapObjectService } from '../../core/services/map-object.service';
 import { MapControlsPanelComponent } from "../../ui/map-controls-panel/map-controls-panel.component";
@@ -26,7 +26,7 @@ import { BaseLayerDescriptionModel } from '../../core/types/types';
 })
 export class MainMapComponent {
   private readonly uiStore = inject(UIStore);
-  private readonly mapOvjectService = inject(MapObjectService)
+  private readonly mapObjectService = inject(MapObjectService)
   private readonly navigatorService = inject(NavigatorService)
   private readonly markersLayerService = inject(MarkersLayerService);
 
@@ -73,11 +73,17 @@ export class MainMapComponent {
     });
   }
 
+  //-----MAP_EVENTS---------
   protected onMapReady(map: L.Map): void {
     this.mapInstance = map;
     this.mapInstance.attributionControl.setPrefix("Leaflet");
     this._isLocating.set(false)
-    this.mapOvjectService.loadMapObjects()
+    this.mapObjectService.loadMapObjects()
+    this.onMapMoveEnd()
+  }
+
+  protected onMapMoveEnd(): void {
+    this.uiStore.updateCurrentMapBounds(this.mapInstance!.getBounds())
   }
 
   //-------USER_ACTIONS-----
@@ -94,7 +100,7 @@ export class MainMapComponent {
   onChangeLayer(newLayer: BaseLayerDescriptionModel): void {
     this.mapInstance!.removeLayer(this.uiStore.getCurrentBaseLayer().layer)
     this.mapInstance!.addLayer(newLayer.layer)
-    this.uiStore.changeCurrentBaseLayer(newLayer)
+    this.uiStore.updateCurrentBaseLayer(newLayer)
   }
 
 }

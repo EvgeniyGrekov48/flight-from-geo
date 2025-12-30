@@ -18,17 +18,16 @@ import { MapObjectCardComponent } from "../../ui/map-object-card/map-object-card
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MapObjectListComponent {
-  private readonly mapObjectService = inject(MapObjectService);
   private readonly uiStore = inject(UIStore);
 
-  protected readonly objectsList = this.mapObjectService.getObjects
+  protected readonly objectsList = this.uiStore.getObjectsInViewPort
 
   protected isSelectedObject(id: number): boolean {
     return this.uiStore.getSelectedObjectId() === id
   }
 
   protected selectObject(id: number): void {
-    this.uiStore.selectObject(id)
+    this.uiStore.updateSelectedObject(id)
   }
   
 }

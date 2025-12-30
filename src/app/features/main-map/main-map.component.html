@@ -3,7 +3,8 @@
     leaflet 
     [leafletOptions]="options" 
     [leafletLayer]="selectedLayer()"
-    (leafletMapReady)="onMapReady($event)">
+    (leafletMapReady)="onMapReady($event)"
+    (leafletMapMoveEnd)="onMapMoveEnd()">
   </div>
 
   @if (mapInstance) {

@@ -6,14 +6,14 @@ import { UIStore } from '../../core/stores/ui.store';
 
 const MARKER_RADIUS = 8;
 const MARKER_BORDER = 2;
-const SELECTED_MULTIPLIER = 1.5;
+const SELECTED_MULTIPLIER = 2;
 
 const SIZE = (radius: number, border: number) => radius + border;
 
 const MARKER_COLORS = {
-    [EnumMapObject.PARAGLIDING]: 'hsl(210, 100%, 50%)',
-    [EnumMapObject.THERMAL]: 'hsl(0, 75%, 56%)',
-    [EnumMapObject.USER]: 'hsl(140, 60%, 45%)'
+    [EnumMapObject.PARAGLIDING]: 'hsl(210, 80%, 40%)',
+    [EnumMapObject.THERMAL]: 'hsl(0, 80%, 40%)',
+    [EnumMapObject.USER]: 'hsl(140, 80%, 35%)'
 };
 
 const createIcon = (type: EnumMapObject, isSelected: boolean): L.DivIcon => {
@@ -66,7 +66,7 @@ export class MarkersLayerService {
     private readonly uiStore = inject(UIStore);
 
     public readonly markersLayer = computed(() => {
-        const objects = this.mapObjectService.getObjects()
+        const objects = this.uiStore.getObjectsInViewPort()
         return this.createMarkersLayer(objects)
     });
 
@@ -84,7 +84,7 @@ export class MarkersLayerService {
             });
             marker
                 .bindTooltip(`<b>${obj.title}</b><br>${obj.description}`, NORMAL_TOOLTIP_OPTION)
-                .on('click', () => this.uiStore.selectObject(obj.id))
+                .on('click', () => this.uiStore.updateSelectedObject(obj.id))
                 .addTo(_markersLayer);
         });
         return _markersLayer
@@ -99,7 +99,7 @@ export class MarkersLayerService {
             });
             marker
                 .bindTooltip(`<b>${selectedObj.title}</b><br>${selectedObj.description}`, SELECTED_TOOLTIP_OPTION)
-                .on('click', () => this.uiStore.selectObject(selectedObj.id))
+                .on('click', () => this.uiStore.updateSelectedObject(selectedObj.id))
                 .setZIndexOffset(1000)
                 .addTo(_selectedLayer);
         }
