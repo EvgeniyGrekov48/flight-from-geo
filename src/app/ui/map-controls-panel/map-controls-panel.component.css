@@ -24,11 +24,11 @@
 .control-button {
   transition: all var(--transition-fast);
   border: 2px solid transparent;
+  box-shadow: var(--shadow-small)
 }
 
 .control-button:hover:not(:disabled) {
   border-color: hsla(var(--color-main), 1);
-  box-shadow: var(--shadow-medium);
 }
 
 .control-button:disabled {
@@ -36,7 +36,6 @@
   cursor: not-allowed;
 }
 
-/* Дропдаун */
 .dropdown {
   background: hsla(var(--gray-100), 0.98);
   border-radius: var(--radius-medium);
