@@ -12,7 +12,6 @@ import { BaseLayerDescriptionModel } from '../../core/types/types';
 
 @Component({
   selector: 'app-main-map',
-  standalone: true,
   imports: [
     CommonModule,
     LeafletDirective,

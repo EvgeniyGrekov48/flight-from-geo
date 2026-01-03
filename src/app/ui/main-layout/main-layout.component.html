@@ -3,6 +3,7 @@
 
     <app-main-map class="main-map" [class.main-map__compressed]="isSidebarOpen()"></app-main-map>
     
-    <app-map-object-list class="sidebar" [class.sidebar__open]="isSidebarOpen()">
-    </app-map-object-list>
+    <div class="sidebar" [class.sidebar__open]="isSidebarOpen()">
+        <router-outlet></router-outlet>
+    </div>
 </div>
