@@ -15,11 +15,6 @@
   background-color: hsla(var(--color-main), 0.05);
 }
 
-.card.selected {
-  border-color: hsla(var(--color-main), 0.8);
-  background-color: hsla(var(--color-main), 0.15);
-}
-
 .description {
   margin: 0;
   margin-top: var(--space-md);

@@ -1,4 +1,4 @@
-<div tuiSurface class="card" [class.selected]="isSelected()" (click)="clicked.emit()">
+<div tuiSurface class="card" (click)="clicked.emit()">
     <h3 tuiTitle size="s">{{ object().title }}</h3>
     <p class="description">{{ object().description }}</p>
 </div>

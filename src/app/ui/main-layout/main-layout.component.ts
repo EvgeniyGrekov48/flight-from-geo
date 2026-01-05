@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { UIStore } from '../../core/stores/ui.store';
 import { MainMapComponent } from "../../features/main-map/main-map.component";
-import { MapObjectListComponent } from "../../features/map-object-list/map-object-list.component";
+import { RouterModule } from '@angular/router';
+
 
 @Component({
   selector: 'app-main-layout',
-  imports: [MainMapComponent, MapObjectListComponent],
+  imports: [MainMapComponent, RouterModule],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

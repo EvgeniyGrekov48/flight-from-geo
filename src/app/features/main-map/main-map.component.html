@@ -2,9 +2,10 @@
   <div class="main-map--container" 
     leaflet 
     [leafletOptions]="options" 
-    [leafletLayer]="selectedLayer()"
+    [leafletLayer]="selectedMarkerLayer()"
     (leafletMapReady)="onMapReady($event)"
-    (leafletMapMoveEnd)="onMapMoveEnd()">
+    (leafletMapMoveEnd)="onMapMoveEnd()"
+  >
   </div>
 
   @if (mapInstance) {
@@ -18,6 +19,7 @@
       (toggleSidebar)="toggleSidebar()"
       (locateUser)="flyToLocateUser()"
       (zoomIn)="mapInstance.zoomIn()"
-      (zoomOut)="mapInstance.zoomOut()"/>
+      (zoomOut)="mapInstance.zoomOut()"
+    />
   }
 </div>

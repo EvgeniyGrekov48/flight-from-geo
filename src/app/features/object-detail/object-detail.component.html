@@ -1,0 +1,7 @@
+<div>
+    <h2>{{ object()?.title }}</h2>
+    <p>{{ object()?.description }}</p>
+    <p>Координаты: {{ object()?.coords?.lat }}, {{ object()?.coords?.lng }}</p>
+    <p>Тип: {{ object()?.type }}</p>
+    <button (click)="closeDetail()">X</button>
+</div>

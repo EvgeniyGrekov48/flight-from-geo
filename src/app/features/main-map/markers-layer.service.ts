@@ -1,4 +1,4 @@
-import { Injectable, inject, computed, effect } from '@angular/core';
+import { Injectable, inject, computed } from '@angular/core';
 import L, { LayerGroup, TooltipOptions } from 'leaflet';
 import { EnumMapObject, MapObjectAPI } from '../../core/types/types';
 import { MapObjectService } from '../../core/services/map-object.service';
@@ -70,8 +70,8 @@ export class MarkersLayerService {
         return this.createMarkersLayer(objects)
     });
 
-    public readonly selectedLayer = computed(() => {
-        const id = this.uiStore.getSelectedObjectId()
+    public readonly selectedMarkerLayer = computed(() => {
+        const id = this.uiStore.selectedObjectId()
         const objects = this.mapObjectService.getObjects()
         return this.createSelectedMarkerLayer(id, objects)
     });
@@ -84,7 +84,7 @@ export class MarkersLayerService {
             });
             marker
                 .bindTooltip(`<b>${obj.title}</b><br>${obj.description}`, NORMAL_TOOLTIP_OPTION)
-                .on('click', () => this.uiStore.updateSelectedObject(obj.id))
+                .on('click', () => this.uiStore.routerNavigateToSelectedObject(obj.id))
                 .addTo(_markersLayer);
         });
         return _markersLayer
@@ -99,7 +99,7 @@ export class MarkersLayerService {
             });
             marker
                 .bindTooltip(`<b>${selectedObj.title}</b><br>${selectedObj.description}`, SELECTED_TOOLTIP_OPTION)
-                .on('click', () => this.uiStore.updateSelectedObject(selectedObj.id))
+                .on('click', () => this.uiStore.routerNavigateToList())
                 .setZIndexOffset(1000)
                 .addTo(_selectedLayer);
         }
