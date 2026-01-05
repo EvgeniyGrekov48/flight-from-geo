@@ -2,7 +2,7 @@
   <div class="main-map--container" 
     leaflet 
     [leafletOptions]="options" 
-    [leafletLayer]="selectedLayer()"
+    [leafletLayer]="selectedMarkerLayer()"
     (leafletMapReady)="onMapReady($event)"
     (leafletMapMoveEnd)="onMapMoveEnd()">
   </div>

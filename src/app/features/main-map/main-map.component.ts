@@ -32,7 +32,7 @@ export class MainMapComponent {
   protected mapInstance?: L.Map;
 
   private readonly markersLayer = this.markersLayerService.markersLayer;
-  protected readonly selectedLayer = this.markersLayerService.selectedLayer;
+  protected readonly selectedMarkerLayer = this.markersLayerService.selectedMarkerLayer;
 
   protected readonly isSidebarOpen = this.uiStore.isSidebarOpen;
   protected readonly getCurrentBaseLayer = this.uiStore.getCurrentBaseLayer

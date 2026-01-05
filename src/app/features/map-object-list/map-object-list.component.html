@@ -1,7 +1,10 @@
 <tui-scrollbar>
   <div class="list-content">
     @for (obj of objectsList(); track obj.id) {
-    <app-map-object-card [object]="obj" [isSelected]="isSelectedObject(obj.id)" (clicked)="selectObject(obj.id)" />
+    <app-map-object-card 
+      [object]="obj" 
+      (clicked)="viewObjectDetail(obj.id)" 
+    />
     }
   </div>
 </tui-scrollbar>

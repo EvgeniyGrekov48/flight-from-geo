@@ -11,7 +11,6 @@ import { TuiSurface, TuiTitle } from '@taiga-ui/core';
 })
 export class MapObjectCardComponent {
   public readonly object = input.required<MapObjectAPI>();
-  public readonly isSelected = input<boolean>(false);
-
+  
   public readonly clicked = output<void>();
 }

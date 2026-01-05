@@ -1,7 +1,5 @@
-// map-object-list.component.ts
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MapObjectService } from '../../core/services/map-object.service';
 import { UIStore } from '../../core/stores/ui.store';
 import { TuiScrollbar } from "@taiga-ui/core";
 import { MapObjectCardComponent } from "../../ui/map-object-card/map-object-card.component";
@@ -22,12 +20,8 @@ export class MapObjectListComponent {
 
   protected readonly objectsList = this.uiStore.getObjectsInViewPort
 
-  protected isSelectedObject(id: number): boolean {
-    return this.uiStore.getSelectedObjectId() === id
-  }
-
-  protected selectObject(id: number): void {
-    this.uiStore.updateSelectedObject(id)
+  protected viewObjectDetail(id: number): void {
+    this.uiStore.routerNavigateToSelectedObject(id)
   }
   
 }
