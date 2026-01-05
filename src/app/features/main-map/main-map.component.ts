@@ -3,12 +3,12 @@ import { ChangeDetectionStrategy, Component, effect, inject, linkedSignal } from
 import { LeafletDirective, LeafletLayerDirective } from '@bluehalo/ngx-leaflet';
 import { LAYERS_BASE__LIST, OPTIONS_MAP } from './main-map.const';
 import { NavigatorService } from '../../core/services/navigator.service';
-import { UIStore } from '../../core/stores/ui.store';
 import L from 'leaflet';
 import { MarkersLayerService } from './markers-layer.service';
 import { MapObjectService } from '../../core/services/map-object.service';
 import { MapControlsPanelComponent } from "../../ui/map-controls-panel/map-controls-panel.component";
 import { BaseLayerDescriptionModel } from '../../core/types/types';
+import { AppStore } from '../../core/stores/app.store';
 
 @Component({
   selector: 'app-main-map',
@@ -24,33 +24,34 @@ import { BaseLayerDescriptionModel } from '../../core/types/types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainMapComponent {
-  private readonly uiStore = inject(UIStore);
-  private readonly mapObjectService = inject(MapObjectService)
-  private readonly navigatorService = inject(NavigatorService)
-  private readonly markersLayerService = inject(MarkersLayerService);
+  private readonly _mapObjectService = inject(MapObjectService)
+  private readonly _navigatorService = inject(NavigatorService)
+  private readonly _markersLayerService = inject(MarkersLayerService);
+  private readonly _appStore = inject(AppStore)
+
+  private readonly _isLocating = linkedSignal(() => !this._navigatorService.getCoords());
 
   protected mapInstance?: L.Map;
 
-  private readonly markersLayer = this.markersLayerService.markersLayer;
-  protected readonly selectedMarkerLayer = this.markersLayerService.selectedMarkerLayer;
+  private readonly markersLayer = this._markersLayerService.markersLayer;
+  protected readonly selectedMarkerLayer = this._markersLayerService.selectedMarkerLayer;
 
-  protected readonly isSidebarOpen = this.uiStore.isSidebarOpen;
-  protected readonly getCurrentBaseLayer = this.uiStore.getCurrentBaseLayer
+  protected readonly isSidebarOpen = this._appStore.isSidebarOpen;
+  protected readonly getCurrentBaseLayer = this._appStore.getCurrentBaseLayer
 
   protected readonly options = OPTIONS_MAP
   protected readonly layersBaseList = LAYERS_BASE__LIST
   
-  private _isLocating = linkedSignal(() => !this.navigatorService.getCoords());
   protected readonly isLocating = this._isLocating.asReadonly();
 
   constructor() {
-    this.initeffectAddMarkersLayer()
-    this.initEffectViewLocateUser()
-    this.initEffectInvalidateSize()
+    this._initeffectAddMarkersLayer()
+    this._initEffectViewLocateUser()
+    this._initEffectInvalidateSize()
   }
 
   //------INIT-------
-  private initeffectAddMarkersLayer(): void {
+  private _initeffectAddMarkersLayer(): void {
     effect(() => {
       const _markersLayer = this.markersLayer()
       this.mapInstance?.removeLayer(_markersLayer)
@@ -58,17 +59,17 @@ export class MainMapComponent {
     })
   }
 
-  private initEffectViewLocateUser(): void {
+  private _initEffectViewLocateUser(): void {
     effect(() => {
-      const _coords = this.navigatorService.getCoords();
+      const _coords = this._navigatorService.getCoords();
       this.mapInstance?.flyTo([_coords.latitude, _coords.longitude], this.mapInstance.getZoom());
     });
   }
 
-  private initEffectInvalidateSize(): void {
+  private _initEffectInvalidateSize(): void {
     effect(() => {
       const _isSidebarOpen = this.isSidebarOpen();
-      setTimeout(() => this.mapInstance?.invalidateSize(), this.uiStore.SIDEBAR__TRANSITION + 1)
+      setTimeout(() => this.mapInstance?.invalidateSize(), this._appStore.SIDEBAR__TRANSITION + 1)
     });
   }
 
@@ -77,29 +78,29 @@ export class MainMapComponent {
     this.mapInstance = map;
     this.mapInstance.attributionControl.setPrefix("Leaflet");
     this._isLocating.set(false)
-    this.mapObjectService.loadMapObjects()
+    this._mapObjectService.loadMapObjects()
     this.onMapMoveEnd()
   }
 
   protected onMapMoveEnd(): void {
-    this.uiStore.updateCurrentMapBounds(this.mapInstance!.getBounds())
+    this._appStore.setCurrentMapBounds(this.mapInstance!.getBounds())
   }
 
   //-------USER_ACTIONS-----
   protected toggleSidebar(): void {
-    this.uiStore.toggleSidebar();
+    this._appStore.toggleSidebar();
   }
 
   protected flyToLocateUser(): void {
     this._isLocating.set(true);
-    this.navigatorService.updateCurrentPosition();
+    this._navigatorService.updateCurrentPosition();
   }
 
   //------CHILDS_ACTIONS-----
-  onChangeLayer(newLayer: BaseLayerDescriptionModel): void {
-    this.mapInstance!.removeLayer(this.uiStore.getCurrentBaseLayer().layer)
+  protected onChangeLayer(newLayer: BaseLayerDescriptionModel): void {
+    this.mapInstance!.removeLayer(this._appStore.getCurrentBaseLayer().layer)
     this.mapInstance!.addLayer(newLayer.layer)
-    this.uiStore.updateCurrentBaseLayer(newLayer)
+    this._appStore.setCurrentBaseLayer(newLayer)
   }
 
 }
