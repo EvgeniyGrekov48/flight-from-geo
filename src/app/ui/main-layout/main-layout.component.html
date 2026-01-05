@@ -1,9 +1,15 @@
-<div class="main-layout" [style.--sidebar__transition]="SIDEBAR__TRANSITION + 'ms'"
-    [style.--sidebar__open__width]="SIDEBAR__WIDTH + '%'">
-
-    <app-main-map class="main-map" [class.main-map__compressed]="isSidebarOpen()"></app-main-map>
-    
-    <div class="sidebar" [class.sidebar__open]="isSidebarOpen()">
-        <router-outlet></router-outlet>
+<div class="main-layout" 
+    [style.--sidebar__transition]="SIDEBAR__TRANSITION + 'ms'"
+    [style.--sidebar__open__width]="SIDEBAR__WIDTH + '%'"
+>
+    <app-main-map 
+        class="main-map" 
+        [class.main-map__compressed]="isSidebarOpen()"
+    />
+    <div 
+        class="sidebar" 
+        [class.sidebar__open]="isSidebarOpen()"
+    >
+        <router-outlet/>
     </div>
 </div>
