@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, DestroyRef, inject, OnIni
 import { ActivatedRoute } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RoutingStore } from '../../core/stores/routing.store';
-import { MapObjectFilterService } from '../../core/services/map-object-filter.service';
+import { MapObjectService } from '../../core/services/map-object.service';
 
 @Component({
   selector: 'app-object-detail',
@@ -15,8 +15,12 @@ export class ObjectDetailComponent implements OnInit {
   private readonly _route = inject(ActivatedRoute);
   private readonly _destroyRef = inject(DestroyRef);
 
-  private readonly _mapObjectFilterService = inject(MapObjectFilterService);
+  private readonly _mapObjectService = inject(MapObjectService);
   private readonly _routingStore = inject(RoutingStore);
+  
+  protected readonly object = computed(() => this._mapObjectService.getObjects()
+      .find(obj => obj.id === this._routingStore.getOpenedObjectId())
+  );
 
   ngOnInit(): void {
     this._route.paramMap
@@ -27,11 +31,7 @@ export class ObjectDetailComponent implements OnInit {
     });
   }
 
-  object = computed(() => this._mapObjectFilterService.getObjectsInViewPort()
-      .find(obj => obj.id === this._routingStore.getOpenedObjectId())
-  );
-
-  closeDetail(): void {
+  protected closeDetail(): void {
     this._routingStore.routerNavigateToList()
   }
 }

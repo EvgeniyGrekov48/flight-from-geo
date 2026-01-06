@@ -9,6 +9,7 @@ import { MapObjectService } from '../../core/services/map-object.service';
 import { MapControlsPanelComponent } from "../../ui/map-controls-panel/map-controls-panel.component";
 import { BaseLayerDescriptionModel } from '../../core/types/types';
 import { AppStore } from '../../core/stores/app.store';
+import { MapObjectFilterService } from '../../core/services/map-object-filter.service';
 
 @Component({
   selector: 'app-main-map',
@@ -25,6 +26,7 @@ import { AppStore } from '../../core/stores/app.store';
 })
 export class MainMapComponent {
   private readonly _mapObjectService = inject(MapObjectService)
+  private readonly _mapObjectFilterService = inject(MapObjectFilterService)
   private readonly _navigatorService = inject(NavigatorService)
   private readonly _markersLayerService = inject(MarkersLayerService);
   private readonly _appStore = inject(AppStore)
@@ -83,7 +85,7 @@ export class MainMapComponent {
   }
 
   protected onMapMoveEnd(): void {
-    this._appStore.setCurrentMapBounds(this.mapInstance!.getBounds())
+    this._mapObjectFilterService.setCurrentMapBounds(this.mapInstance!.getBounds())
   }
 
   //-------USER_ACTIONS-----

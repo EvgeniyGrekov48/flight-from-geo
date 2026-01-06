@@ -63,6 +63,7 @@ const SELECTED_TOOLTIP_OPTION = {
 
 @Injectable()
 export class MarkersLayerService {
+  private readonly _mapObjectService = inject(MapObjectService);
   private readonly _mapObjectFilterService = inject(MapObjectFilterService);
   private readonly _routingStore = inject(RoutingStore);
 
@@ -103,7 +104,7 @@ export class MarkersLayerService {
 
   public readonly selectedMarkerLayer = computed(() => {
     const id = this._routingStore.getOpenedObjectId()
-    const objects = this._mapObjectFilterService.getObjectsInViewPort()
+    const objects = this._mapObjectService.getObjects()
     return this._createSelectedMarkerLayer(id, objects)
   });
 
