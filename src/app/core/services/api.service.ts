@@ -5,11 +5,11 @@ import { MapObjectAPI } from "../types/types";
 
 @Injectable({ providedIn: 'root' })
 export class APIService {
-    private readonly _http = inject(HttpClient)
-    private readonly _URL = "http://192.168.10.26:3000"
+  private readonly _http = inject(HttpClient)
+  private readonly _URL = "http://localhost:3000"
 
-    public getMapObjects(): Observable<MapObjectAPI[]> {
-        return this._http.get<MapObjectAPI[]>(`${this._URL}/mapObjects`)
-    }
+  public getMapObjects(): Observable<MapObjectAPI[]> {
+    return this._http.get<MapObjectAPI[]>(`${this._URL}/mapObjects`)
+  }
 }
 
