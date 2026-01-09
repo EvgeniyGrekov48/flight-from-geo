@@ -3,6 +3,7 @@ import { Injectable, signal } from '@angular/core';
 @Injectable({ providedIn: 'root' })
 export class NavigatorService {
   private readonly _coords = signal<GeolocationCoordinates>({latitude: 0, longitude: 0} as GeolocationCoordinates);
+  
   public readonly getCoords = this._coords.asReadonly()
 
   public updateCurrentPosition(): void {

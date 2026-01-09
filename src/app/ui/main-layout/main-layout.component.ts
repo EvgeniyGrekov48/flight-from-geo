@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { UIStore } from '../../core/stores/ui.store';
+import { AppStore } from '../../core/stores/app.store';
 import { MainMapComponent } from "../../features/main-map/main-map.component";
 import { RouterModule } from '@angular/router';
 
@@ -12,10 +12,10 @@ import { RouterModule } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainLayoutComponent {
-  private readonly uiStore = inject(UIStore);
+  private readonly appStore = inject(AppStore);
 
   protected readonly SIDEBAR__WIDTH = 40
-  protected readonly SIDEBAR__TRANSITION = this.uiStore.SIDEBAR__TRANSITION
+  protected readonly SIDEBAR__TRANSITION = this.appStore.SIDEBAR__TRANSITION
 
-  protected readonly isSidebarOpen = this.uiStore.isSidebarOpen;
+  protected readonly isSidebarOpen = this.appStore.isSidebarOpen;
 }

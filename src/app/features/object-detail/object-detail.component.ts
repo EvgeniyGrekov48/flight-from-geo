@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, computed, DestroyRef, inject, OnInit } from '@angular/core';
-import { MapObjectService } from '../../core/services/map-object.service';
-import { UIStore } from '../../core/stores/ui.store';
 import { ActivatedRoute } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { RoutingStore } from '../../core/stores/routing.store';
+import { MapObjectService } from '../../core/services/map-object.service';
 
 @Component({
   selector: 'app-object-detail',
@@ -12,25 +12,26 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ObjectDetailComponent implements OnInit {
-  private readonly mapObjectService = inject(MapObjectService);
-  private readonly uiStore = inject(UIStore);
-  private readonly route = inject(ActivatedRoute);
-  private readonly destroyRef = inject(DestroyRef);
+  private readonly _route = inject(ActivatedRoute);
+  private readonly _destroyRef = inject(DestroyRef);
+
+  private readonly _mapObjectService = inject(MapObjectService);
+  private readonly _routingStore = inject(RoutingStore);
+  
+  protected readonly object = computed(() => this._mapObjectService.getObjects()
+      .find(obj => obj.id === this._routingStore.getOpenedObjectId())
+  );
 
   ngOnInit(): void {
-    this.route.paramMap
-    .pipe(takeUntilDestroyed(this.destroyRef))
+    this._route.paramMap
+    .pipe(takeUntilDestroyed(this._destroyRef))
     .subscribe(params => {
       const id = params.get('id');
-      this.uiStore.setSelectedObjectId(id ? +id : null);
+      this._routingStore.setOpenedObjectId(id ? +id : null);
     });
   }
 
-  object = computed(() => this.mapObjectService.getObjects()
-      .find(obj => obj.id === this.uiStore.selectedObjectId())
-  );
-
-  closeDetail(): void {
-    this.uiStore.routerNavigateToList()
+  protected closeDetail(): void {
+    this._routingStore.routerNavigateToList()
   }
 }
