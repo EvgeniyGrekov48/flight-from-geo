@@ -1,5 +1,5 @@
 import { latLng, MapOptions, tileLayer } from "leaflet";
-import { BaseLayerDescriptionModel } from "../../core/types/types";
+import { BaseLayerDescriptionModel } from "../../../core/types/types";
 
 const STREET_LAYER = tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

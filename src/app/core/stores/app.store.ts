@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { LAYERS_BASE__LIST } from '../../features/main-map/main-map.const';
+import { LAYERS_BASE__LIST } from '../../features/main-map/main-map.auxiliary/main-map.const';
 import { BaseLayerDescriptionModel } from '../types/types';
 
 @Injectable({ providedIn: 'root' })

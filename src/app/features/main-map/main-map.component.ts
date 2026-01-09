@@ -1,15 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, effect, inject, linkedSignal } from '@angular/core';
 import { LeafletDirective, LeafletLayerDirective } from '@bluehalo/ngx-leaflet';
-import { LAYERS_BASE__LIST, OPTIONS_MAP } from './main-map.const';
+import { LAYERS_BASE__LIST, OPTIONS_MAP } from './main-map.auxiliary/main-map.const';
 import { NavigatorService } from '../../core/services/navigator.service';
 import L from 'leaflet';
-import { MarkersLayerService } from './markers-layer.service';
+import { MarkersLayerService } from './main-map.auxiliary/markers-layer.service';
 import { MapObjectService } from '../../core/services/map-object.service';
 import { MapControlsPanelComponent } from "../../ui/map-controls-panel/map-controls-panel.component";
 import { BaseLayerDescriptionModel } from '../../core/types/types';
 import { AppStore } from '../../core/stores/app.store';
 import { MapObjectFilterService } from '../../core/services/map-object-filter.service';
+import { MarkerIconService } from './main-map.auxiliary/marker-icon.service';
 
 @Component({
   selector: 'app-main-map',
@@ -19,7 +20,10 @@ import { MapObjectFilterService } from '../../core/services/map-object-filter.se
     LeafletLayerDirective,
     MapControlsPanelComponent
   ],
-  providers: [MarkersLayerService],
+  providers: [
+    MarkersLayerService, 
+    MarkerIconService
+  ],
   templateUrl: './main-map.component.html',
   styleUrl: './main-map.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -32,10 +36,10 @@ export class MainMapComponent {
   private readonly _appStore = inject(AppStore)
 
   private readonly _isLocating = linkedSignal(() => !this._navigatorService.getCoords());
+  private readonly _markersLayer = this._markersLayerService.markersLayer;
 
   protected mapInstance?: L.Map;
 
-  private readonly markersLayer = this._markersLayerService.markersLayer;
   protected readonly selectedMarkerLayer = this._markersLayerService.selectedMarkerLayer;
 
   protected readonly isSidebarOpen = this._appStore.isSidebarOpen;
@@ -55,7 +59,7 @@ export class MainMapComponent {
   //------INIT-------
   private _initeffectAddMarkersLayer(): void {
     effect(() => {
-      const _markersLayer = this.markersLayer()
+      const _markersLayer = this._markersLayer()
       this.mapInstance?.removeLayer(_markersLayer)
       this.mapInstance?.addLayer(_markersLayer)
     })
