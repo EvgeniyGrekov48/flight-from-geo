@@ -1,59 +1,76 @@
-# FlightFromGeo
+<p align="center"> <strong>Веб-приложение на Angular 20 для интерактивного отображения тематических объектов на карте</strong><br> <em>Прототип системы автоматической обработки геоданных</em> </p><p align="center"> <img src="https://img.shields.io/badge/Angular-20-red" alt="Angular 20"> <img src="https://img.shields.io/badge/TypeScript-5.9-blue" alt="TypeScript 5.9"> <img src="https://img.shields.io/badge/Zoneless-Enabled-green" alt="Zoneless"> <img src="https://img.shields.io/badge/Status-86%25%20Complete-brightgreen" alt="Status 86%"> </p>
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.13.
+Flight From Geo - Карта парапланерных объектов
+Веб-приложение на Angular 20 для интерактивного отображения тематических объектов на карте 
+(горы для парапланеризма, термические потоки, аэродромы).
+Прототип системы автоматической обработки геоданных.
 
-## Development server
+📋 Функциональность
+Интерактивная карта с 4 базовыми слоями (улицы, спутник, топо, рельеф)
+Список объектов в сайдбаре
+Маркеры объектов на карте
+Детальный просмотр объектов
+Синхронизация выделенного объекта на карте и в сайдбаре
+Фильтрация объектов по видимой области карты
+Геолокация с центрированием карты на пользователе
+Панель управления картой (слои, зум, геолокация)
 
-To start a local development server, run:
+Установка зависимостей
+pnpm install
 
-```bash
-ng serve
-```
+Конфигурация API
+Для изменения адреса API отредактируйте файл src/app/core/services/api.service.ts
+private readonly _URL = "http://localhost:3000"
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Запуск JSON Server (мок API)
+в файле  package.json запустите скрипт: "json-server"
+Сервер запустится на http://localhost:3000
 
-## Code scaffolding
+Запуск Angular приложения
+в файле  package.json запустите скрипт: "start"
+Приложение откроется на http://localhost:4200
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+📁 Структура проекта
+src/
+├── core/                   # Ядро приложения
+│   ├── services/           # Сервисы бизнес-логики
+│   ├── stores/             # Сторы для состояния
+│   └── types/              # Типы и интерфейсы
+|
+├── features/               # Фичи/страницы
+│   ├── main-map/           # Главная карта
+│   ├── map-object-list/    # Список объектов
+│   └── object-detail/      # Детальный просмотр
+|
+├── ui/                     # Переиспользуемые UI компоненты
+│   ├── main-layout/        # Главный слой приложения
+│   ├── map-controls-panel/ # Панель управления картой
+│   └── map-object-card/    # Карточка объекта
+|
+└── styles/                 # Глобальные стили
 
-```bash
-ng generate component component-name
-```
+Данные хранятся в json-server/db.json в формате:
+{
+  "mapObjects": [
+    {
+      "id": 1,
+      "title": "Название объекта",
+      "description": "Описание",
+      "coords": { "lat": 44.101, "lng": 39.023 },
+      "type": "paragliding"
+    }
+  ]
+}
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+📦 Зависимости
+Angular 20 (zoneless режим)
+Taiga UI + less - компонентная библиотека
+Leaflet - карты
+JSON Server - мок API
 
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+🔮 Планы развития
+Загрузка изображений объектов
+Формы создания/редактирования объектов
+Полный CRUD функционал
+Адаптация под мобильные устройства
+Сохранение состояния карты в URL
