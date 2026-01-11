@@ -17,18 +17,18 @@ export class ObjectDetailComponent implements OnInit {
 
   private readonly _mapObjectService = inject(MapObjectService);
   private readonly _routingStore = inject(RoutingStore);
-  
+
   protected readonly object = computed(() => this._mapObjectService.getObjects()
-      .find(obj => obj.id === this._routingStore.getOpenedObjectId())
+    .find(obj => obj.id === this._routingStore.getOpenedObjectId())
   );
 
   ngOnInit(): void {
     this._route.paramMap
-    .pipe(takeUntilDestroyed(this._destroyRef))
-    .subscribe(params => {
-      const id = params.get('id');
-      this._routingStore.setOpenedObjectId(id ? +id : null);
-    });
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe(params => {
+        const id = params.get('id');
+        this._routingStore.setOpenedObjectId(id ? +id : null);
+      });
   }
 
   protected closeDetail(): void {
