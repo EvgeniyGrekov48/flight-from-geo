@@ -16,9 +16,9 @@
     </h2>
     <tui-badge 
       size="m"
-      [style.background]="'hsl(210, 80%, 40%)'"
+      [style.background]="getObjectTypeColor(obj.type)"
       >
-      {{ obj.type }}
+      {{ getObjectTypeAlias(obj.type) }}
     </tui-badge>
   </div>
 
@@ -28,10 +28,10 @@
 
   <div class="coords">
     <span class="coord">
-      Широта: {{ obj.coords.lat | number:'1.5-5' }}
+      Широта: {{ obj.coords.lat | number:'1.4-4' }}
     </span>
     <span class="coord">
-      Долгота: {{ obj.coords.lng | number:'1.5-5' }}
+      Долгота: {{ obj.coords.lng | number:'1.4-4' }}
     </span>
   </div>
   } @else {
