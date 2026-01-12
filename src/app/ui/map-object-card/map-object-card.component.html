@@ -1,4 +1,16 @@
-<div tuiSurface class="card" (click)="clicked.emit()">
-    <h3 tuiTitle size="s">{{ object().title }}</h3>
-    <p class="description">{{ object().description }}</p>
+<div 
+  class="card" 
+  (click)="clicked.emit()"
+>
+  <div class="header-with-badge">
+    <h2 tuiTitle>
+      {{ object().title }}
+    </h2>
+    <tui-badge 
+      size="s"
+      [style.background]="getObjectTypeColor(object().type)"
+      >
+      {{ getObjectTypeAlias(object().type) }}
+    </tui-badge>
+  </div>
 </div>

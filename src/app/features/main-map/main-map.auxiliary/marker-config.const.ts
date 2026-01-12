@@ -13,7 +13,7 @@ export const OBJECT_TYPE_COLOR = {
 export const OBJECT_TYPE_ALIAS = {
   [EnumMapObject.PARAGLIDING]: 'Полет',
   [EnumMapObject.THERMAL]: 'Термик',
-  [EnumMapObject.USER]: 'Пользователь'
+  [EnumMapObject.USER]: 'Мой топ'
 } as const;
 
 export const MARKER_Z_INDEX = {

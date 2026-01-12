@@ -17,7 +17,7 @@ export class MarkersLayerService {
       const iconConfig: MarkerIconConfig = this._markerIconService.getIconConfig(obj.type, false);
       const marker = L.marker([obj.coords.lat, obj.coords.lng], { icon: iconConfig.icon });
       marker
-        .bindTooltip(`<b>${obj.title}</b><br>${obj.description}`, iconConfig.tooltipOptions)
+        .bindTooltip(`<b>${obj.title}</b>`, iconConfig.tooltipOptions)
         .on('click', () => this._routingStore.routerNavigateToOpenedObject(obj.id))
         .addTo(_markersLayer);
     });
@@ -31,7 +31,7 @@ export class MarkersLayerService {
       const iconConfig: MarkerIconConfig = this._markerIconService.getIconConfig(selectedObj.type, true);     
       const marker = L.marker([selectedObj.coords.lat, selectedObj.coords.lng], { icon: iconConfig.icon });
       marker
-        .bindTooltip(`<b>${selectedObj.title}</b><br>${selectedObj.description}`, iconConfig.tooltipOptions)
+        .bindTooltip(`<b>${selectedObj.title}</b>`, iconConfig.tooltipOptions)
         .on('click', () => this._routingStore.routerNavigateToList())
         .setZIndexOffset(iconConfig.zIndexOffset)
         .addTo(_selectedLayer);

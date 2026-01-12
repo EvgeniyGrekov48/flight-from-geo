@@ -53,4 +53,5 @@ export class ObjectDetailComponent implements OnInit {
   protected getObjectTypeAlias(type: EnumMapObject): string {
     return OBJECT_TYPE_ALIAS[type]
   }
+  
 }

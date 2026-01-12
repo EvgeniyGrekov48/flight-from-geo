@@ -1,18 +1,22 @@
 .card {
   padding: var(--space-md);
-  margin-top: var(--space-sm);
-  margin-bottom: var(--space-sm);
   cursor: pointer;
   transition: all var(--transition-normal);
-  border: 2px solid hsla(var(--gray-70), 1);
+  border: 1px solid hsla(var(--gray-70), 1);
   border-radius: var(--radius-medium);
+  min-height: 6rem;
 }
 
 .card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-large);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
   border-color: hsla(var(--color-main), 0.6);
   background-color: hsla(var(--color-main), 0.05);
+}
+
+.header-with-badge {
+  display: flex;
+  justify-content: space-between;
 }
 
 .description {
