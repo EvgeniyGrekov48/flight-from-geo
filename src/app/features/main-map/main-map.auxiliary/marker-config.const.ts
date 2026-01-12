@@ -5,9 +5,9 @@ export const MARKER_BORDER = 2;
 export const SELECTED_MULTIPLIER = 2;
 
 export const OBJECT_TYPE_COLOR = {
-  [EnumMapObject.PARAGLIDING]: 'hsl(210, 80%, 40%)',
-  [EnumMapObject.THERMAL]: 'hsl(0, 80%, 50%)',
-  [EnumMapObject.USER]: 'hsl(140, 80%, 35%)'
+  [EnumMapObject.PARAGLIDING]: 'hsl(210, 50%, 50%)',
+  [EnumMapObject.THERMAL]: 'hsl(15, 70%, 55%)',
+  [EnumMapObject.USER]: 'hsl(140, 50%, 45%)'
 } as const;
 
 export const OBJECT_TYPE_ALIAS = {
