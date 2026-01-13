@@ -1,9 +1,11 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
+import { AppStore } from './app.store';
 
 @Injectable({ providedIn: 'root' })
 export class RoutingStore {
   private readonly _router = inject(Router);
+  private readonly _appStore = inject(AppStore);
 
   private readonly _openedObjectId = signal<number | null>(null);
 
@@ -16,6 +18,7 @@ export class RoutingStore {
 
   public routerNavigateToOpenedObject(id: number): void {
     this._router.navigate(['/object', id])
+    this._appStore.openSidebar()
   }
 
   public routerNavigateToList(): void {
