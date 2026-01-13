@@ -1,0 +1,29 @@
+.nav-row {
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--space-sm);
+  border-bottom: 1px solid hsla(var(--gray-50), 0.3);
+}
+
+.content-card {
+  padding: var(--space-lg);
+}
+
+.header-with-badge {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.object-description {
+  color: hsla(var(--gray-30), 1);
+}
+
+.coords {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.coord {
+  color: hsla(var(--gray-30), 1);
+}

@@ -16,6 +16,10 @@ export class AppStore {
     this._isSidebarOpen.update(current => !current);
   }
 
+  public openSidebar(): void {
+    this._isSidebarOpen.set(true);
+  }
+
   //---------BASE_LAYER----------
   public readonly getCurrentBaseLayer = this._currentBaseLayer.asReadonly();
 

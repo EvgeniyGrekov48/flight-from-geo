@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DivIcon, PointExpression, TooltipOptions } from 'leaflet';
 import { EnumMapObject } from '../../../core/types/types';
-import { MARKER_BORDER, MARKER_COLORS, MARKER_RADIUS, MARKER_Z_INDEX, SELECTED_MULTIPLIER } from './marker-config.const';
+import { MARKER_BORDER, OBJECT_TYPE_COLOR, MARKER_RADIUS, MARKER_Z_INDEX, SELECTED_MULTIPLIER } from './marker-config.const';
 
 export interface MarkerIconConfig {
   icon: DivIcon;
@@ -29,7 +29,7 @@ export class MarkerIconService {
   public getIconConfig(type: EnumMapObject, isSelected: boolean): MarkerIconConfig {
     const _radius = MARKER_RADIUS * (isSelected ? SELECTED_MULTIPLIER : 1);
     const _border = MARKER_BORDER * (isSelected ? SELECTED_MULTIPLIER : 1);
-    const _color = MARKER_COLORS[type];
+    const _color = OBJECT_TYPE_COLOR[type];
     
     const _html = this._createIconHTML(_radius, _border, _color);
     const _radiusOverall = _radius + _border
