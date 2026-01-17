@@ -51,13 +51,13 @@ export class MainMapComponent {
   protected readonly isLocating = this._isLocating.asReadonly();
 
   constructor() {
-    this._initeffectAddMarkersLayer()
+    this._initEffectAddMarkersLayer()
     this._initEffectViewLocateUser()
     this._initEffectInvalidateSize()
   }
 
   //------INIT-------
-  private _initeffectAddMarkersLayer(): void {
+  private _initEffectAddMarkersLayer(): void {
     effect(() => {
       const _markersLayer = this._markersLayer()
       this.mapInstance?.removeLayer(_markersLayer)
