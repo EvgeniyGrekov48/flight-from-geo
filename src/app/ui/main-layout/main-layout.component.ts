@@ -14,8 +14,10 @@ import { RouterModule } from '@angular/router';
 export class MainLayoutComponent {
   private readonly appStore = inject(AppStore);
 
-  protected readonly SIDEBAR__WIDTH = 40
-  protected readonly SIDEBAR__TRANSITION = this.appStore.SIDEBAR__TRANSITION
+  protected readonly SIDEBAR_STYLES = {
+    '--sidebar__transition': `${this.appStore.SIDEBAR__TRANSITION}ms`,
+    '--sidebar__open__width': '40%'
+  };
 
   protected readonly isSidebarOpen = this.appStore.isSidebarOpen;
 }
