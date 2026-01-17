@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { EnumMapObject, MapObjectAPI } from '../../core/types/types';
 import { TuiTitle } from '@taiga-ui/core';
 import { TuiBadge } from "@taiga-ui/kit";
@@ -16,11 +16,7 @@ export class MapObjectCardComponent {
   
   public readonly clicked = output<void>();
 
-  protected getObjectTypeColor(type: EnumMapObject): string {
-    return OBJECT_TYPE_COLOR[type]
-  }
+  protected readonly getObjectTypeColor = computed<string>(() => OBJECT_TYPE_COLOR[this.object().type])
+  protected readonly getObjectTypeAlias = computed<string>(() => OBJECT_TYPE_ALIAS[this.object().type])
   
-  protected getObjectTypeAlias(type: EnumMapObject): string {
-    return OBJECT_TYPE_ALIAS[type]
-  }
 }

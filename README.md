@@ -16,6 +16,7 @@ npm install -g pnpm
 pnpm i
 ```
 
+Можете использовать npm версии >= 7
 ```bash
 npm install
 ```
